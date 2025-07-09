@@ -1,58 +1,700 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CmdSharp – Command Your Invoicing</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CmdSharp - Command Your Invoicing</title>
+    <meta name="description" content="Revolutionary voice-powered and shortcut-driven invoicing app. Create professional invoices in seconds with AI intelligence.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #304C67 100%);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            padding-top: 80px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-demo {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .command-demo {
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            color: #00ff00;
+            background: #000;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #ffd700;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #333;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin: 1rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #667eea 0%, #304C67 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 5rem 0;
+            background: #f8f9fa;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #667eea, #304C67);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+        }
+
+        /* Documentation */
+        .documentation {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .doc-section {
+            margin-bottom: 3rem;
+        }
+
+        .doc-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        .shortcut-examples {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .shortcut-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .shortcut-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .shortcut-item code {
+            background: #000;
+            color: #00ff00;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Pricing */
+        .pricing {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #304C67 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 3rem;
+            border-radius: 15px;
+            margin: 2rem auto;
+            max-width: 400px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 1rem 0;
+            color: #ffd700;
+        }
+
+        .price-note {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: #ffd700;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a:hover {
+            color: #ffd700;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content .tagline {
+                font-size: 1.2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .command-demo {
+                font-size: 1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
-<body class="bg-white text-gray-800">
-  <header class="text-center py-12 bg-[#2C3E4C] text-white">
-    <h1 class="text-4xl font-bold mb-2">CmdSharp</h1>
-    <p class="text-xl">Command your invoicing. Invoice at the speed of thought.</p>
-  </header>
+<body>
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">⚡ CmdSharp</a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#documentation">Documentation</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <main class="px-6 py-12 max-w-4xl mx-auto">
-    <section class="text-center mb-10">
-      <h2 class="text-2xl font-semibold mb-4">Finally, invoicing as fast as you can think</h2>
-      <p class="text-lg text-gray-700">
-        Revolutionary command shortcuts, voice recognition, and AI intelligence.<br />
-        <strong>Type it, speak it, or slash it — and CmdSharp does the rest.</strong>
-      </p>
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content animate-in">
+                <h1>Command Your Invoicing</h1>
+                <p class="tagline">Lightning-Fast Voice & Shortcut Powered Professional Billing</p>
+                
+                <div class="hero-demo">
+                    <p>⚡ Type this command:</p>
+                    <div class="command-demo">I @john #web $500 /30 notes:urgent project</div>
+                    <p>🎉 Get a professional invoice in 2 seconds!</p>
+                </div>
+
+                <a href="#features" class="cta-button">Discover the Magic</a>
+                <a href="#pricing" class="cta-button">Get CmdSharp Now</a>
+            </div>
+        </div>
     </section>
 
-    <section class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-center mb-12">
-      <div class="border p-6 rounded shadow hover:shadow-md transition">
-        <h3 class="text-lg font-semibold mb-2">🎙️ Voice to Invoice</h3>
-        <p>Speak naturally and CmdSharp creates a complete invoice with client, service, amount, and due date.</p>
-      </div>
-      <div class="border p-6 rounded shadow hover:shadow-md transition">
-        <h3 class="text-lg font-semibold mb-2">⌨️ Slash-Command Input</h3>
-        <p>Use shortcut magic like <code>I @john #web $500 /30</code> to instantly generate professional PDFs.</p>
-      </div>
-      <div class="border p-6 rounded shadow hover:shadow-md transition">
-        <h3 class="text-lg font-semibold mb-2">🧾 Instant PDF</h3>
-        <p>Beautiful, branded PDF invoices generated in seconds — no clicking through endless forms.</p>
-      </div>
-      <div class="border p-6 rounded shadow hover:shadow-md transition">
-        <h3 class="text-lg font-semibold mb-2">📊 Business Intelligence</h3>
-        <p>Track revenue, customer history, and invoice performance in your Command Center dashboard.</p>
-      </div>
+    <section class="features" id="features">
+        <div class="container">
+            <h2>Revolutionary Features</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Lightning Command System</h3>
+                    <p>Type "I @customer #service $amount" and create professional invoices in 2 seconds. World's fastest invoicing system.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎤</div>
+                    <h3>Voice-to-Invoice Technology</h3>
+                    <p>Speak naturally: "Create invoice for John Smith, web design, 500 dollars" - AI understands and creates professional invoices.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Intelligent Shortcut Parser</h3>
+                    <p>Custom shortcuts that expand into full business context. @customer becomes full contact details, #service becomes complete descriptions.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🏢</div>
+                    <h3>Professional Business Center</h3>
+                    <p>One-command branding, automatic tax calculations, customer intelligence, and Fortune 500 quality PDF generation.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Business Intelligence Dashboard</h3>
+                    <p>Advanced analytics with debtors age analysis, sales reporting, customer insights, and performance metrics.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>AI Customer Intelligence</h3>
+                    <p>Remembers customer preferences, suggests services, auto-completes details, and learns from your invoicing patterns.</p>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <div class="text-center">
-      <a href="https://appsumo.com/products/cmdsharp" class="inline-block bg-[#2C3E4C] text-white text-lg font-semibold px-6 py-3 rounded hover:bg-[#1e2c3a] transition">
-        🚀 Get Lifetime Access for $49 on AppSumo
-      </a>
-      <p class="mt-2 text-sm text-gray-600">One-time purchase. No subscriptions. 60-day refund guarantee.</p>
-    </div>
-  </main>
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Type or Speak</h3>
+                    <p>Use shortcuts like "I @john #web $500" or speak naturally "Create invoice for John, web design, 500 dollars"</p>
+                </div>
 
-  <footer class="text-center text-sm text-gray-500 py-6">
-    © 2025 CmdSharp · 
-    <a href="/privacy.html" class="underline">Privacy Policy</a> · 
-    <a href="/terms.html" class="underline">Terms & Conditions</a>
-  </footer>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>AI Processes</h3>
+                    <p>Advanced AI understands your command, expands shortcuts, fills in customer details, and calculates totals</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Professional Output</h3>
+                    <p>Generate beautiful, professional PDF invoices with your branding, ready to send to clients</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="documentation" id="documentation">
+        <div class="container">
+            <h2>Documentation & Help</h2>
+            
+            <div class="doc-section">
+                <h3>📝 Basic Invoice Commands</h3>
+                <div class="shortcut-examples">
+                    <div class="shortcut-list">
+                        <div class="shortcut-item">
+                            <strong>Basic Invoice:</strong><br>
+                            <code>I @customer #service $amount</code><br>
+                            <em>Creates invoice for customer with specified service and amount</em>
+                        </div>
+                        <div class="shortcut-item">
+                            <strong>With Due Date:</strong><br>
+                            <code>I @john #web $500 /30</code><br>
+                            <em>Invoice due in 30 days from today</em>
+                        </div>
+                        <div class="shortcut-item">
+                            <strong>With Quantity:</strong><br>
+                            <code>I @acme #logo qty:3 $250</code><br>
+                            <em>3 logo designs at $250 each</em>
+                        </div>
+                        <div class="shortcut-item">
+                            <strong>With Email:</strong><br>
+                            <code>I @client em:john@company.com #consulting $1000</code><br>
+                            <em>Includes email address in invoice</em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="doc-section">
+                <h3>🎤 Voice Commands</h3>
+                <div class="shortcut-examples">
+                    <div class="shortcut-list">
+                        <div class="shortcut-item">
+                            <strong>Natural Speech:</strong><br>
+                            <em>"Create invoice for TechCorp, website development, 2500 dollars, due in 15 days"</em>
+                        </div>
+                        <div class="shortcut-item">
+                            <strong>Multiple Items:</strong><br>
+                            <em>"Invoice for ABC Company, 3 logo designs at 200 each, 1 business card design 150 dollars"</em>
+                        </div>
+                        <div class="shortcut-item">
+                            <strong>With Notes:</strong><br>
+                            <em>"Create quote for StartupXYZ, mobile app development, 5000 dollars, note that this is phase one"</em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="doc-section">
+                <h3>⚡ Advanced Shortcuts</h3>
+                <div class="shortcut-examples">
+                    <div class="shortcut-list">
+                        <div class="shortcut-item">
+                            <strong>Discounts:</strong><br>
+                            <code>I @john #web $500 disc:10%</code><br>
+                            <em>Applies 10% discount to invoice</em>
+                        </div>
+                        <div class="shortcut-item">
+                            <strong>Notes:</strong><br>
+                            <code>I @client #service $300 notes:urgent project</code><br>
+                            <em>Adds notes to invoice</em>
+                        </div>
+                        <div class="shortcut-item">
+                            <strong>Deposits (Quotes):</strong><br>
+                            <code>Q @startup #app $5000 dep:25%</code><br>
+                            <em>Quote with 25% deposit required</em>
+                        </div>
+                        <div class="shortcut-item">
+                            <strong>Multiple Services:</strong><br>
+                            <code>I @company #web $800 + #logo $300 + #seo $500</code><br>
+                            <em>Invoice with multiple services</em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="doc-section">
+                <h3>🏢 Business Management</h3>
+                <div class="shortcut-examples">
+                    <div class="shortcut-list">
+                        <div class="shortcut-item">
+                            <strong>Customer Management:</strong><br>
+                            <em>Add customers with @shortcut for quick access</em>
+                        </div>
+                        <div class="shortcut-item">
+                            <strong>Service Library:</strong><br>
+                            <em>Create #shortcuts for common services with preset prices</em>
+                        </div>
+                        <div class="shortcut-item">
+                            <strong>Professional Branding:</strong><br>
+                            <em>Upload logo and business details for all invoices</em>
+                        </div>
+                        <div class="shortcut-item">
+                            <strong>Tax Configuration:</strong><br>
+                            <em>Set tax rates and preferences for automatic calculations</em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="doc-section">
+                <h3>📊 Reporting & Analytics</h3>
+                <div class="shortcut-examples">
+                    <div class="shortcut-list">
+                        <div class="shortcut-item">
+                            <strong>Revenue Tracking:</strong><br>
+                            <em>Monthly, quarterly, and yearly revenue reports</em>
+                        </div>
+                        <div class="shortcut-item">
+                            <strong>Debtors Age Analysis:</strong><br>
+                            <em>0-30, 31-60, 61-90, 91-120, 120+ day aging reports</em>
+                        </div>
+                        <div class="shortcut-item">
+                            <strong>Customer Insights:</strong><br>
+                            <em>Top customers, payment patterns, and service preferences</em>
+                        </div>
+                        <div class="shortcut-item">
+                            <strong>Performance Metrics:</strong><br>
+                            <em>Track your invoicing speed and efficiency gains</em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2>Special Launch Pricing</h2>
+            
+            <div class="pricing-card">
+                <h3>CmdSharp Lifetime License</h3>
+                <div class="price">$59</div>
+                <p class="price-note">One-time payment • Lifetime access • All features included</p>
+                <p>Regular price: $299/year</p>
+                <p>Save 80% + no recurring fees!</p>
+                <a href="#" class="cta-button">Get Lifetime Access</a>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <h3>What's Included:</h3>
+                <ul style="text-align: left; display: inline-block; margin-top: 1rem;">
+                    <li>✅ Lightning-fast shortcut system</li>
+                    <li>✅ Advanced voice recognition</li>
+                    <li>✅ Professional PDF generation</li>
+                    <li>✅ Business intelligence dashboard</li>
+                    <li>✅ Customer & service management</li>
+                    <li>✅ All future updates included</li>
+                    <li>✅ 60-day money-back guarantee</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>CmdSharp</h4>
+                    <p>Command your invoicing with lightning-fast shortcuts and AI intelligence.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Features</h4>
+                    <a href="#features">Lightning Commands</a>
+                    <a href="#features">Voice Recognition</a>
+                    <a href="#features">Business Intelligence</a>
+                    <a href="#features">Professional PDFs</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <a href="mailto:support@proviska.com">Email Support</a>
+                    <a href="#documentation">Documentation</a>
+                    <a href="#how-it-works">How It Works</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <a href="/privacy.html">Privacy Policy</a>
+                    <a href="/terms.html"">Terms of Service</a>
+                </div>
+            </div>
+            
+            <div style="border-top: 1px solid #555; padding-top: 1rem; margin-top: 2rem;">
+                <p>&copy; 2024 CmdSharp by Proviska. All rights reserved.</p>
+                <p>Command your success with the world's fastest invoicing system.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple scroll animation
+        window.addEventListener('scroll', () => {
+            const elements = document.querySelectorAll('.feature-card, .step');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('animate-in');
+                }
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Dynamic command demo
+        const commands = [
+            'I @john #web $500 /30 notes:urgent project',
+            'I @acme #logo qty:3 $250 disc:10%',
+            'Q @startup #app $5000 dep:25% /60',
+            'I @client em:ceo@company.com #consulting $1200'
+        ];
+
+        let currentCommand = 0;
+        const commandDemo = document.querySelector('.command-demo');
+        
+        if (commandDemo) {
+            setInterval(() => {
+                currentCommand = (currentCommand + 1) % commands.length;
+                commandDemo.textContent = commands[currentCommand];
+            }, 3000);
+        }
+    </script>
 </body>
 </html>
