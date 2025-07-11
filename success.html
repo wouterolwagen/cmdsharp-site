@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Complete - CmdSharp</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #304C67 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .success-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 3rem;
+            border-radius: 20px;
+            max-width: 600px;
+            margin: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .success-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .success-message {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .download-section {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            border-left: 4px solid #ffd700;
+        }
+
+        .download-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #ffd700;
+        }
+
+        .download-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #333;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin: 0.5rem;
+        }
+
+        .download-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .support-info {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .support-info h3 {
+            color: #ffd700;
+            margin-bottom: 1rem;
+        }
+
+        .support-info p {
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .support-info a {
+            color: #ffd700;
+            text-decoration: none;
+        }
+
+        .support-info a:hover {
+            text-decoration: underline;
+        }
+
+        .loading-license {
+            display: none;
+            margin: 1rem 0;
+            color: #ffd700;
+        }
+
+        .license-info {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .copy-btn {
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+            border: 1px solid #ffd700;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 215, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <div class="success-icon">🎉</div>
+        <h1 class="success-title">Purchase Complete!</h1>
+        <p class="success-message">
+            Thank you for purchasing CmdSharp Lifetime License! 
+            Your payment has been processed successfully.
+        </p>
+
+        <div class="download-section">
+            <h2 class="download-title">📱 Download Your App</h2>
+            <p style="margin-bottom: 1.5rem;">Your license is being prepared. Download CmdSharp and activate with your license key:</p>
+            
+            <a href="#" class="download-link" onclick="downloadApp('android')">
+                📱 Download for Android
+            </a>
+            <a href="#" class="download-link" onclick="downloadApp('ios')">
+                🍎 Download for iOS
+            </a>
+
+            <div class="loading-license" id="loading-license">
+                <p>🔄 Generating your license key...</p>
+            </div>
+
+            <div id="license-section" style="display: none;">
+                <h3 style="color: #ffd700; margin: 1.5rem 0 1rem 0;">Your License Key:</h3>
+                <div class="license-info">
+                    <div id="license-key">Loading...</div>
+                    <button class="copy-btn" onclick="copyLicenseKey()">📋 Copy License Key</button>
+                </div>
+                <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 1rem;">
+                    Save this license key - you'll need it to activate CmdSharp on your device.
+                </p>
+            </div>
+        </div>
+
+        <div class="support-info">
+            <h3>📞 Need Help?</h3>
+            <p>Having trouble with your download or activation?</p>
+            <p>Email us at: <a href="mailto:support@proviska.com">support@proviska.com</a></p>
+            <p>We typically respond within 24 hours</p>
+        </div>
+    </div>
+
+    <script>
+        let licenseKey = null;
+
+        // Get payment ID from URL parameters
+        function getPaymentId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('payment_id') || urlParams.get('session_id');
+        }
+
+        // Generate license key after successful payment
+        async function generateLicense() {
+            const paymentId = getPaymentId();
+            if (!paymentId) {
+                console.error('No payment ID found');
+                return;
+            }
+
+            document.getElementById('loading-license').style.display = 'block';
+
+            try {
+                const response = await fetch('https://ai.proviska.com/api/generate-license.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        payment_id: paymentId,
+                        product: 'cmdsharp-lifetime'
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.success && data.license_key) {
+                    licenseKey = data.license_key;
+                    document.getElementById('license-key').textContent = licenseKey;
+                    document.getElementById('loading-license').style.display = 'none';
+                    document.getElementById('license-section').style.display = 'block';
+                } else {
+                    throw new Error(data.message || 'Failed to generate license');
+                }
+            } catch (error) {
+                console.error('License generation error:', error);
+                document.getElementById('loading-license').innerHTML = 
+                    '<p style="color: #ff6b6b;">⚠️ Error generating license. Please contact support.</p>';
+            }
+        }
+
+        // Copy license key to clipboard
+        function copyLicenseKey() {
+            if (!licenseKey) return;
+
+            navigator.clipboard.writeText(licenseKey).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = '✅ Copied!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = licenseKey;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = '✅ Copied!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            });
+        }
+
+        // Download app based on platform
+        function downloadApp(platform) {
+            if (platform === 'android') {
+                // Replace with actual Google Play Store link
+                window.open('https://play.google.com/store/apps/details?id=com.proviska.cmdsharp', '_blank');
+            } else if (platform === 'ios') {
+                // Replace with actual App Store link
+                window.open('https://apps.apple.com/app/cmdsharp/id123456789', '_blank');
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            generateLicense();
+        });
+    </script>
+</body>
+</html>

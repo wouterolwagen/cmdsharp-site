@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Cancelled - CmdSharp</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #304C67 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .cancel-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 3rem;
+            border-radius: 20px;
+            max-width: 600px;
+            margin: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .cancel-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .cancel-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #ff6b6b;
+        }
+
+        .cancel-message {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .why-section {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            border-left: 4px solid #ffd700;
+        }
+
+        .why-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #ffd700;
+        }
+
+        .feature-list {
+            text-align: left;
+            margin: 1rem 0;
+        }
+
+        .feature-list li {
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #333;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .guarantee-section {
+            background: rgba(0, 255, 0, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+        }
+
+        .guarantee-section h3 {
+            color: #90EE90;
+            margin-bottom: 1rem;
+        }
+
+        .support-info {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .support-info h3 {
+            color: #ffd700;
+            margin-bottom: 1rem;
+        }
+
+        .support-info p {
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .support-info a {
+            color: #ffd700;
+            text-decoration: none;
+        }
+
+        .support-info a:hover {
+            text-decoration: underline;
+        }
+
+        .demo-section {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .command-demo {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            color: #00ff00;
+            background: #000;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #ffd700;
+        }
+
+        @media (max-width: 768px) {
+            .cancel-container {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            
+            .cancel-title {
+                font-size: 2rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cancel-container">
+        <div class="cancel-icon">😔</div>
+        <h1 class="cancel-title">Purchase Cancelled</h1>
+        <p class="cancel-message">
+            No worries! Your payment was cancelled and no charges were made.
+            You can try again anytime.
+        </p>
+
+        <div class="why-section">
+            <h2 class="why-title">⚡ Why CmdSharp?</h2>
+            <p>Don't miss out on the world's fastest invoicing system:</p>
+            <ul class="feature-list">
+                <li>✅ Create professional invoices in 2 seconds</li>
+                <li>✅ Voice-powered AI technology</li>
+                <li>✅ Lightning-fast shortcut system</li>
+                <li>✅ Save 95% of your invoicing time</li>
+                <li>✅ Lifetime license - no recurring fees</li>
+                <li>✅ All future updates included</li>
+            </ul>
+        </div>
+
+        <div class="demo-section">
+            <p>⚡ See how easy it is:</p>
+            <div class="command-demo">I @john #web $500 /30 notes:urgent project</div>
+            <p>🎉 Creates a complete professional invoice in 2 seconds!</p>
+        </div>
+
+        <div class="guarantee-section">
+            <h3>🛡️ Risk-Free Guarantee</h3>
+            <p>Try CmdSharp risk-free with our 60-day money-back guarantee. 
+            If you're not completely satisfied, we'll refund your purchase - no questions asked.</p>
+        </div>
+
+        <div class="action-buttons">
+            <a href="/#pricing" class="btn btn-primary">🚀 Try Again - Get CmdSharp</a>
+            <a href="/#features" class="btn btn-secondary">📖 Learn More</a>
+        </div>
+
+        <div class="support-info">
+            <h3>❓ Have Questions?</h3>
+            <p>Want to know more before purchasing?</p>
+            <p>Email us at: <a href="mailto:support@proviska.com">support@proviska.com</a></p>
+            <p>We'd love to help you discover how CmdSharp can revolutionize your invoicing!</p>
+        </div>
+    </div>
+
+    <script>
+        // Track cancellation for analytics
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'purchase_cancelled', {
+                'event_category': 'ecommerce',
+                'event_label': 'cmdsharp_lifetime'
+            });
+        }
+
+        // Simple animation on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.querySelector('.cancel-container');
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                container.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                container.style.opacity = '1';
+                container.style.transform = 'translateY(0)';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

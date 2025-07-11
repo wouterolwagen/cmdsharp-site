@@ -591,11 +591,20 @@
             
             <div class="pricing-card">
                 <h3>CmdSharp Lifetime License</h3>
-                <div class="price">$59</div>
-                <p class="price-note">One-time payment • Lifetime access • All features included</p>
-                <p>Regular price: $299/year</p>
-                <p>Save 80% + no recurring fees!</p>
-                <a href="#" class="cta-button">Get Lifetime Access</a>
+                <div class="price" id="pricing-display">
+                    <span id="price-amount">$39</span>
+                    <span id="price-currency">USD</span>
+                </div>
+                <p class="price-note" id="price-note">One-time payment • Lifetime access • All features included</p>
+                <p id="price-context">Regular price: $299/year</p>
+                <p>Save 87% + no recurring fees!</p>
+                <button class="cta-button" id="get-license-btn" onclick="initiatePurchase()">
+                    <span id="btn-text">Get Lifetime Access</span>
+                    <span id="btn-loading" style="display: none;">🌍 Detecting location...</span>
+                </button>
+                <p id="location-info" style="font-size: 0.9rem; margin-top: 1rem; opacity: 0.8; display: none;">
+                    <span id="location-text"></span>
+                </p>
             </div>
 
             <div style="margin-top: 2rem;">
@@ -695,6 +704,176 @@
                 commandDemo.textContent = commands[currentCommand];
             }, 3000);
         }
+
+        // Geo-location based pricing and checkout
+        let userLocation = null;
+        let pricingData = {};
+
+        // Detect user location on page load
+        async function detectLocation() {
+            try {
+                // Fetch location and pricing data in parallel
+                const [locationResponse, pricingResponse] = await Promise.all([
+                    fetch('https://ai.proviska.com/api/get-location.php'),
+                    fetch('https://ai.proviska.com/api/pricing-config.php')
+                ]);
+                
+                const locationData = await locationResponse.json();
+                const pricingResult = await pricingResponse.json();
+                
+                if (locationData.success) {
+                    userLocation = locationData;
+                } else {
+                    console.error('Location detection failed:', locationData.message);
+                    // Default to US location
+                    userLocation = { country: 'US', currency: 'USD' };
+                }
+                
+                if (pricingResult.success) {
+                    // Convert pricing array to object for easier lookup
+                    pricingData = {};
+                    pricingResult.pricing.forEach(config => {
+                        pricingData[config.country] = {
+                            amount: config.symbol + config.amount,
+                            currency: config.currency,
+                            symbol: config.symbol,
+                            price: config.amount,
+                            regular_price: config.regular_price,
+                            payment_gateway: config.payment_gateway,
+                            note: 'One-time payment • Lifetime access • All features included',
+                            context: `Regular price: ${config.symbol}${config.regular_price}/year`
+                        };
+                    });
+                    
+                    // Add fallback for international users if no specific country pricing
+                    if (!pricingData[userLocation.country] && !pricingData['US']) {
+                        pricingData['US'] = {
+                            amount: '$39',
+                            currency: 'USD',
+                            symbol: '$',
+                            price: 39,
+                            regular_price: 299,
+                            payment_gateway: 'lemonsqueezy',
+                            note: 'One-time payment • Lifetime access • All features included',
+                            context: 'Regular price: $299/year'
+                        };
+                    }
+                } else {
+                    console.error('Pricing fetch failed:', pricingResult.message);
+                    // Default pricing
+                    pricingData = {
+                        'ZA': { amount: 'R599', currency: 'ZAR', symbol: 'R', price: 599, regular_price: 4499, payment_gateway: 'payfast', note: 'One-time payment • Lifetime access • All features included', context: 'Regular price: R4,499/year' },
+                        'US': { amount: '$39', currency: 'USD', symbol: '$', price: 39, regular_price: 299, payment_gateway: 'lemonsqueezy', note: 'One-time payment • Lifetime access • All features included', context: 'Regular price: $299/year' }
+                    };
+                }
+                
+                updatePricingDisplay();
+                showLocationInfo();
+                
+            } catch (error) {
+                console.error('Error detecting location or fetching pricing:', error);
+                // Default to US pricing
+                userLocation = { country: 'US', currency: 'USD' };
+                pricingData = {
+                    'ZA': { amount: 'R599', currency: 'ZAR', symbol: 'R', price: 599, regular_price: 4499, payment_gateway: 'payfast', note: 'One-time payment • Lifetime access • All features included', context: 'Regular price: R4,499/year' },
+                    'US': { amount: '$39', currency: 'USD', symbol: '$', price: 39, regular_price: 299, payment_gateway: 'lemonsqueezy', note: 'One-time payment • Lifetime access • All features included', context: 'Regular price: $299/year' }
+                };
+                updatePricingDisplay();
+            }
+        }
+
+        // Update pricing display based on location
+        function updatePricingDisplay() {
+            if (!userLocation || !pricingData) return;
+
+            const country = userLocation.country;
+            const pricing = pricingData[country] || pricingData['US'] || Object.values(pricingData)[0];
+            
+            if (!pricing) {
+                console.error('No pricing data available');
+                return;
+            }
+            
+            // Update pricing elements
+            document.getElementById('price-amount').textContent = pricing.amount;
+            document.getElementById('price-currency').textContent = pricing.currency;
+            document.getElementById('price-note').textContent = pricing.note;
+            document.getElementById('price-context').textContent = pricing.context;
+            
+            // Update button text
+            document.getElementById('btn-text').textContent = `Get Lifetime Access (${pricing.amount})`;
+        }
+
+        // Show location info
+        function showLocationInfo() {
+            if (!userLocation || !pricingData) return;
+
+            const locationInfo = document.getElementById('location-info');
+            const locationText = document.getElementById('location-text');
+            
+            const country = userLocation.country;
+            const pricing = pricingData[country] || pricingData['US'] || Object.values(pricingData)[0];
+            
+            if (!pricing) return;
+            
+            const countryName = country === 'ZA' ? 'South Africa' : 
+                               country === 'GB' ? 'United Kingdom' :
+                               country === 'EU' ? 'Europe' : 'International';
+            const paymentMethod = pricing.payment_gateway === 'payfast' ? 'PayFast' : 'LemonSqueezy';
+            
+            locationText.textContent = `🌍 Detected location: ${countryName} • Payment via ${paymentMethod}`;
+            locationInfo.style.display = 'block';
+        }
+
+        // Initiate purchase based on location
+        async function initiatePurchase() {
+            if (!userLocation) {
+                alert('Please wait while we detect your location...');
+                return;
+            }
+
+            // Show loading state
+            document.getElementById('btn-text').style.display = 'none';
+            document.getElementById('btn-loading').style.display = 'inline';
+            
+            try {
+                // Create checkout session
+                const response = await fetch('https://ai.proviska.com/api/create-checkout.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        country: userLocation.country,
+                        currency: userLocation.currency,
+                        product: 'cmdsharp-lifetime',
+                        success_url: 'https://cmdsharp.com/success.html',
+                        cancel_url: 'https://cmdsharp.com/cancel.html'
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.success && data.checkout_url) {
+                    // Redirect to checkout
+                    window.location.href = data.checkout_url;
+                } else {
+                    throw new Error(data.message || 'Failed to create checkout session');
+                }
+            } catch (error) {
+                console.error('Checkout error:', error);
+                alert('Sorry, there was an error processing your request. Please try again.');
+                
+                // Reset button state
+                document.getElementById('btn-text').style.display = 'inline';
+                document.getElementById('btn-loading').style.display = 'none';
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            detectLocation();
+        });
     </script>
 </body>
 </html>
