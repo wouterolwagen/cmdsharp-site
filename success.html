@@ -152,16 +152,19 @@
             Your payment has been processed successfully.
         </p>
 
-        <div class="download-section">
-            <h2 class="download-title">📱 Download Your App</h2>
-            <p style="margin-bottom: 1.5rem;">Your license is being prepared. Download CmdSharp and activate with your license key:</p>
-            
-            <a href="#" class="download-link" onclick="downloadApp('android')">
-                📱 Download for Android
-            </a>
-            <a href="#" class="download-link" onclick="downloadApp('ios')">
-                🍎 Download for iOS
-            </a>
+        <div class="download-section" id="license-section" style="display: none;">
+            <h2 class="download-title">🔑 Your License Key</h2>
+            <div style="background: rgba(255,255,255,0.2); padding: 1.5rem; border-radius: 10px; margin: 1rem 0; border: 2px solid #ffd700;">
+                <div id="license-key" style="font-family: monospace; font-size: 1.4rem; font-weight: bold; color: #ffd700; margin: 0.5rem 0; letter-spacing: 1px;"></div>
+                <button onclick="copyLicense()" style="background: #ffd700; color: #304C67; padding: 0.5rem 1rem; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Copy License Key</button>
+            </div>
+            <p style="margin-bottom: 1.5rem;">📧 An email with download instructions has been sent to your email.</p>
+        </div>
+
+        <div id="loading-section">
+            <h2 class="download-title">🔄 Processing Your Order...</h2>
+            <p style="margin-bottom: 1.5rem;">Please wait while we generate your license key.</p>
+        </div>
 
             <div class="loading-license" id="loading-license">
                 <p>🔄 Generating your license key...</p>
