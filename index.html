@@ -689,9 +689,9 @@
 
         // Dynamic command demo
         const commands = [
-            'I @john #web $500 /30 notes:urgent project',
-            'I @acme #logo qty:3 $250 disc:10%',
-            'Q @startup #app $5000 dep:25% /60',
+            'I @john #web $500 /day notes:urgent project',
+            'I @acme #logo qty:3 $250 disc:10',
+            'Q @startup #app $5000 dep:25 due:60',
             'I @client em:ceo@company.com #consulting $1200'
         ];
 
@@ -713,10 +713,18 @@
         async function detectLocation() {
             try {
                 // Fetch location and pricing data in parallel
-                const [locationResponse, pricingResponse] = await Promise.all([
-                    fetch('https://ai.proviska.com/api/get-location.php'),
-                    fetch('https://ai.proviska.com/api/pricing-config.php')
-                ]);
+                  const urlParams = new URLSearchParams(window.location.search);
+                  const forceCountry = urlParams.get('country');
+
+                  const locationUrl = new URL('https://ai.proviska.com/api/get-location.php');
+                  if (forceCountry) {
+                      locationUrl.searchParams.set('country', forceCountry);
+                  }
+
+                  const [locationResponse, pricingResponse] = await Promise.all([
+                     fetch(locationUrl.toString()),
+                     fetch('https://ai.proviska.com/api/pricing-config.php')
+                  ]);
                 
                 const locationData = await locationResponse.json();
                 const pricingResult = await pricingResponse.json();
