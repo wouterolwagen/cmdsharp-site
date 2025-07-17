@@ -18,6 +18,7 @@
             color: #333;
             background: linear-gradient(135deg, #667eea 0%, #304C67 100%);
             overflow-x: hidden;
+            padding-top: 80px;
         }
 
         .container {
@@ -352,12 +353,27 @@
         html {
             scroll-behavior: smooth;
         }
+        .nav-no-padding {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
     </style>
 </head>
 <body>
+    <!-- Fullscreen Header Image -->
+<section style="
+    width: 100vw;
+    height: 100vh;
+    background-image: url('images/header.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+">
+</section>
+
     <header>
-        <nav class="container">
-            <a href="#" class="logo">⚡ CmdSharp</a>
+        <nav class="container nav-no-padding">
+            <a href="#" class="logo"><img src="images/logo-transparent.png" height="60" alt="CmdSharp Logo"></a>
             <ul class="nav-links">
                 <li><a href="#features">Features</a></li>
                 <li><a href="#how-it-works">How It Works</a></li>
@@ -370,7 +386,7 @@
     <section class="hero">
         <div class="container">
             <div class="hero-content animate-in">
-                <h1>Command Your Invoicing</h1>
+                <h1>Speak, type, command your invoicing</h1>
                 <p class="tagline">Lightning-Fast Voice & Shortcut Powered Professional Billing</p>
                 
                 <div class="hero-demo">
@@ -454,6 +470,17 @@
             </div>
         </div>
     </section>
+   
+    <div style="margin-top: 4rem; text-align: center;">
+        <h3>Watch It in Action</h3>
+        <div style="position: relative; padding-bottom: 56.25%; height: 0; max-width: 560px; margin: 1rem auto;">
+            <iframe src="https://www.youtube.com/embed/nlOy4FJ40dw" 
+                    frameborder="0" 
+                    allowfullscreen 
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+            </iframe>
+        </div>
+    </div>
 
     <section class="documentation" id="documentation">
         <div class="container">
