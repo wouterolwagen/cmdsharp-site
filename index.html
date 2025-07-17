@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CmdSharp - Command Your Invoicing</title>
     <meta name="description" content="Revolutionary voice-powered and shortcut-driven invoicing app. Create professional invoices in seconds with AI intelligence.">
+    <link rel="icon" href="images/favicon.ico" />
+    <meta name="theme-color" content="#304C67" />
     <style>
         * {
             margin: 0;
@@ -37,6 +39,7 @@
             right: 0;
             z-index: 1000;
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: #3C5B94; 
         }
 
         nav {
@@ -357,6 +360,26 @@
             padding-left: 0 !important;
             padding-right: 0 !important;
         }
+        .mobile-cta {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        @media(min-width: 768px) {
+            .mobile-cta {
+                display: none;
+            }
+        }
+
+        @media(max-width: 600px) {
+            .footer-section {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -382,7 +405,9 @@
             </ul>
         </nav>
     </header>
-
+    <div class="mobile-cta">
+        <a href="#pricing" class="cta-button">🎯 Get CmdSharp</a>
+    </div>
     <section class="hero">
         <div class="container">
             <div class="hero-content animate-in">
@@ -481,6 +506,42 @@
             </iframe>
         </div>
     </div>
+
+        <section class="pricing" id="pricing">
+        <div class="container">
+            <h2>Special Launch Pricing</h2>
+            
+            <div class="pricing-card">
+                <h3>CmdSharp Lifetime License</h3>
+                <div class="price" id="pricing-display">
+                    <span id="price-amount">$39</span>
+                    <span id="price-currency">USD</span>
+                </div>
+                <p class="price-note" id="price-note">One-time payment • Lifetime access • All features included</p>
+                <p id="price-context">Regular price: $299/year</p>
+                <p>Save 87% + no recurring fees!</p>
+                <button class="cta-button" id="get-license-btn" onclick="initiatePurchase()">
+                    <span id="btn-text">Get Lifetime Access</span>
+                    <span id="btn-loading" style="display: none;">🌍 Detecting location...</span>
+                </button>
+                <p id="location-info" style="font-size: 0.9rem; margin-top: 1rem; opacity: 0.8; display: none;">
+                    <span id="location-text"></span>
+                </p>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <h3>What's Included:</h3>
+                <ul style="text-align: left; display: inline-block; margin-top: 1rem;">
+                    <li>✅ Lightning-fast shortcut system</li>
+                    <li>✅ Advanced voice recognition</li>
+                    <li>✅ Professional PDF generation</li>
+                    <li>✅ Business intelligence dashboard</li>
+                    <li>✅ Customer & service management</li>
+                    <li>✅ All future updates included</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
     <section class="documentation" id="documentation">
         <div class="container">
@@ -611,43 +672,11 @@
             </div>
         </div>
     </section>
+    <section style="background: #ffd700; padding: 2rem; text-align: center;">
+  <h2 style="color:#000;">Still scrolling? Start invoicing smarter today 🧠⚡</h2>
+  <a href="#pricing" class="cta-button" style="margin-top: 1rem;">Get CmdSharp Now</a>
+</section>
 
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <h2>Special Launch Pricing</h2>
-            
-            <div class="pricing-card">
-                <h3>CmdSharp Lifetime License</h3>
-                <div class="price" id="pricing-display">
-                    <span id="price-amount">$39</span>
-                    <span id="price-currency">USD</span>
-                </div>
-                <p class="price-note" id="price-note">One-time payment • Lifetime access • All features included</p>
-                <p id="price-context">Regular price: $299/year</p>
-                <p>Save 87% + no recurring fees!</p>
-                <button class="cta-button" id="get-license-btn" onclick="initiatePurchase()">
-                    <span id="btn-text">Get Lifetime Access</span>
-                    <span id="btn-loading" style="display: none;">🌍 Detecting location...</span>
-                </button>
-                <p id="location-info" style="font-size: 0.9rem; margin-top: 1rem; opacity: 0.8; display: none;">
-                    <span id="location-text"></span>
-                </p>
-            </div>
-
-            <div style="margin-top: 2rem;">
-                <h3>What's Included:</h3>
-                <ul style="text-align: left; display: inline-block; margin-top: 1rem;">
-                    <li>✅ Lightning-fast shortcut system</li>
-                    <li>✅ Advanced voice recognition</li>
-                    <li>✅ Professional PDF generation</li>
-                    <li>✅ Business intelligence dashboard</li>
-                    <li>✅ Customer & service management</li>
-                    <li>✅ All future updates included</li>
-                    <li>✅ 60-day money-back guarantee</li>
-                </ul>
-            </div>
-        </div>
-    </section>
 
     <footer>
         <div class="container">
