@@ -6,54 +6,117 @@
     <title>CmdSharp - Command Your Invoicing</title>
     <meta name="description" content="Revolutionary voice-powered and shortcut-driven invoicing app. Create professional invoices in seconds with AI intelligence.">
     <link rel="icon" href="images/favicon.ico" />
-    <meta name="theme-color" content="#304C67" />
+    <meta name="theme-color" content="#1a1a2e" />
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #304C67 100%);
-            overflow-x: hidden;
-            padding-top: 80px;
+        :root {
+            --primary-dark: #1a1a2e;
+            --primary-purple: #16213e;
+            --accent-cyan: #0f3460;
+            --neon-green: #00ff88;
+            --neon-blue: #00d4ff;
+            --neon-purple: #8b5cf6;
+            --text-light: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--primary-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Glass morphism utility */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+        }
+
+        /* Animated background */
+        .bg-animated {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-purple) 50%, var(--accent-cyan) 100%);
+            animation: gradientShift 8s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-purple) 50%, var(--accent-cyan) 100%); }
+            50% { background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--primary-purple) 50%, var(--primary-dark) 100%); }
+        }
+
+        /* Floating elements */
+        .float-element {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
         }
 
         /* Header */
         header {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            background-color: #3C5B94; 
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
         }
 
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
             font-size: 1.5rem;
-            font-weight: bold;
-            color: white;
+            font-weight: 700;
+            color: var(--neon-green);
             text-decoration: none;
+        }
+
+        .logo img {
+            filter: brightness(0) invert(1);
+            transition: filter 0.3s ease;
+        }
+
+        .logo:hover img {
+            filter: brightness(0) invert(1) drop-shadow(0 0 5px var(--neon-green));
         }
 
         .nav-links {
@@ -63,13 +126,30 @@
         }
 
         .nav-links a {
-            color: white;
+            color: var(--text-light);
             text-decoration: none;
-            transition: color 0.3s;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--neon-green);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         .nav-links a:hover {
-            color: #ffd700;
+            color: var(--neon-green);
         }
 
         /* Hero Section */
@@ -78,223 +158,489 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            color: white;
             position: relative;
-            padding-top: 80px;
+            padding: 6rem 2rem 2rem;
         }
 
-        .hero-content h1 {
-            font-size: 3.5rem;
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            font-weight: 400;
+        }
+
+        .command-showcase {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .command-showcase::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .command-demo {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 1.2rem;
+            background: var(--primary-dark);
+            color: var(--neon-green);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid var(--neon-green);
+            margin: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .typing-cursor {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
+            color: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-light);
+            border: 2px solid var(--glass-border);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--neon-green);
+            color: var(--neon-green);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
             margin-bottom: 1rem;
-            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            background: linear-gradient(135deg, var(--text-light), var(--text-muted));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .hero-content .tagline {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        .hero-demo {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 2rem;
-            border-radius: 15px;
-            margin: 2rem 0;
-            backdrop-filter: blur(10px);
-        }
-
-        .command-demo {
-            font-family: 'Courier New', monospace;
+        .section-subtitle {
             font-size: 1.2rem;
-            color: #00ff00;
-            background: #000;
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 1rem 0;
-            border-left: 4px solid #ffd700;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(45deg, #ffd700, #ffed4e);
-            color: #333;
-            padding: 1rem 2rem;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: transform 0.3s, box-shadow 0.3s;
-            margin: 1rem;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
-        }
-
-        /* Features Section */
-        .features {
-            padding: 5rem 0;
-            background: white;
-        }
-
-        .features h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #333;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
-            margin-bottom: 3rem;
         }
 
         .feature-card {
-            background: linear-gradient(135deg, #667eea 0%, #304C67 100%);
-            color: white;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
             padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            transition: transform 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
         }
 
         .feature-card:hover {
             transform: translateY(-5px);
+            border-color: var(--neon-green);
+            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.1);
         }
 
         .feature-icon {
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 1rem;
+            display: block;
         }
 
         .feature-card h3 {
             font-size: 1.5rem;
+            font-weight: 600;
             margin-bottom: 1rem;
+            color: var(--text-light);
         }
 
-        /* How It Works */
-        .how-it-works {
-            padding: 5rem 0;
-            background: #f8f9fa;
+        .feature-card p {
+            color: var(--text-muted);
+            line-height: 1.6;
         }
 
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .step {
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .step-number {
-            display: inline-block;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(45deg, #667eea, #304C67);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin: 0 auto 1rem;
-        }
-
-        /* Documentation */
-        .documentation {
-            padding: 5rem 0;
-            background: white;
-        }
-
-        .doc-section {
-            margin-bottom: 3rem;
-        }
-
-        .doc-section h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: #667eea;
-        }
-
-        .shortcut-examples {
-            background: #f8f9fa;
-            padding: 2rem;
-            border-radius: 10px;
-            margin: 1rem 0;
-        }
-
-        .shortcut-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1rem;
-        }
-
-        .shortcut-item {
-            background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
-        }
-
-        .shortcut-item code {
-            background: #000;
-            color: #00ff00;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-        }
-
-        /* Pricing */
+        /* Pricing Section */
         .pricing {
-            padding: 5rem 0;
-            background: linear-gradient(135deg, #667eea 0%, #304C67 100%);
-            color: white;
-            text-align: center;
+            padding: 6rem 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            position: relative;
         }
 
         .pricing-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            max-width: 500px;
+            margin: 0 auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
             padding: 3rem;
-            border-radius: 15px;
-            margin: 2rem auto;
-            max-width: 400px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .price {
-            font-size: 3rem;
-            font-weight: bold;
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
+            opacity: 0.05;
+            z-index: -1;
+        }
+
+        .price-display {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--neon-green);
             margin: 1rem 0;
-            color: #ffd700;
         }
 
         .price-note {
-            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .features-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .features-list li::before {
+            content: '✓';
+            color: var(--neon-green);
+            font-weight: bold;
+        }
+
+        /* Video Showcase Section */
+        .video-showcase {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .video-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .video-wrapper {
+            position: relative;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1rem;
+            overflow: hidden;
+        }
+
+        .video-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
+            opacity: 0.05;
+            z-index: -1;
+        }
+
+        .video-wrapper iframe {
+            width: 100%;
+            height: 315px;
+            border-radius: 15px;
+            border: none;
+        }
+
+        .video-details {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-details::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
             opacity: 0.8;
+        }
+
+        .video-details h3 {
+            color: var(--text-light);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .video-details p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .demo-highlights {
+            list-style: none;
+            padding: 0;
+        }
+
+        .demo-highlights li {
+            color: var(--text-light);
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .demo-highlights li::before {
+            content: '▶';
+            color: var(--neon-green);
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .video-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .video-wrapper iframe {
+                height: 250px;
+            }
+        }
+
+        /* Documentation Section */
+        .documentation {
+            padding: 6rem 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+        }
+
+        .doc-section {
+            margin-bottom: 4rem;
+        }
+
+        .doc-examples {
+            margin-top: 2rem;
+        }
+
+        .doc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .doc-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .doc-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .doc-card:hover::before {
+            opacity: 1;
+        }
+
+        .doc-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--neon-green);
+            box-shadow: 0 15px 30px rgba(0, 255, 136, 0.1);
+        }
+
+        .doc-card h4 {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .doc-card code {
+            display: block;
+            background: var(--primary-dark);
+            color: var(--neon-green);
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+            border: 1px solid var(--glass-border);
+        }
+
+        .doc-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin: 0;
         }
 
         /* Footer */
         footer {
-            background: #333;
-            color: white;
+            background: var(--primary-dark);
+            border-top: 1px solid var(--glass-border);
+            padding: 3rem 2rem 1rem;
             text-align: center;
-            padding: 2rem 0;
         }
 
         .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
@@ -302,431 +648,448 @@
         }
 
         .footer-section h4 {
+            color: var(--neon-green);
             margin-bottom: 1rem;
-            color: #ffd700;
+            font-weight: 600;
         }
 
         .footer-section a {
-            color: #ccc;
+            color: var(--text-muted);
             text-decoration: none;
             display: block;
             margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
         }
 
         .footer-section a:hover {
-            color: #ffd700;
+            color: var(--neon-green);
         }
 
-        /* Responsive */
+        .footer-bottom {
+            border-top: 1px solid var(--glass-border);
+            padding-top: 2rem;
+            color: var(--text-muted);
+        }
+
+        /* Mobile Responsive */
         @media (max-width: 768px) {
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-content .tagline {
-                font-size: 1.2rem;
-            }
-
             .nav-links {
                 display: none;
             }
-
-            .command-demo {
-                font-size: 1rem;
+            
+            .hero {
+                padding: 4rem 1rem 2rem;
             }
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            
+            .features-grid {
+                grid-template-columns: 1fr;
             }
-        }
-
-        .animate-in {
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        /* Smooth scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
-        .nav-no-padding {
-            padding-left: 0 !important;
-            padding-right: 0 !important;
-        }
-        .mobile-cta {
-            position: fixed;
-            bottom: 20px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            z-index: 1000;
-        }
-
-        @media(min-width: 768px) {
-            .mobile-cta {
+            
+            .pricing-card {
+                margin: 0 1rem;
+            }
+            
+            /* Hide footer on mobile */
+            footer {
                 display: none;
             }
         }
 
-        @media(max-width: 600px) {
-            .footer-section {
-                display: none;
-            }
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
         }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
     </style>
 </head>
 <body>
-    <!-- Fullscreen Header Image -->
-<section style="
-    width: 100vw;
-    height: 100vh;
-    background-image: url('images/header.webp');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-">
-</section>
+    <div class="bg-animated"></div>
+    
+    <!-- Floating elements -->
+    <div class="float-element" style="top: 20%; left: 10%; font-size: 2rem;">⚡</div>
+    <div class="float-element" style="top: 60%; right: 15%; font-size: 1.5rem; animation-delay: -2s;">🎤</div>
+    <div class="float-element" style="top: 40%; left: 80%; font-size: 1.8rem; animation-delay: -4s;">🧠</div>
 
-    <header>
-        <nav class="container nav-no-padding">
-            <a href="#" class="logo"><img src="images/logo-transparent.png" height="60" alt="CmdSharp Logo"></a>
+    <header id="header">
+        <nav>
+            <a href="#" class="logo">
+                <img src="images/logo-transparent.png" height="40" alt="CmdSharp Logo">
+            </a>
             <ul class="nav-links">
                 <li><a href="#features">Features</a></li>
-                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#demo">Demo</a></li>
                 <li><a href="#documentation">Documentation</a></li>
                 <li><a href="#pricing">Pricing</a></li>
             </ul>
         </nav>
     </header>
-    <div class="mobile-cta">
-        <a href="#pricing" class="cta-button">🎯 Get CmdSharp</a>
-    </div>
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content animate-in">
-                <h1>Speak, type, command your invoicing</h1>
-                <p class="tagline">Lightning-Fast Voice & Shortcut Powered Professional Billing</p>
-                
-                <div class="hero-demo">
-                    <p>⚡ Type this command:</p>
-                    <div class="command-demo">I @john #web $500 /30 notes:urgent project</div>
-                    <p>🎉 Get a professional invoice in 2 seconds!</p>
-                </div>
 
-                <a href="#features" class="cta-button">Discover the Magic</a>
-                <a href="#pricing" class="cta-button">Get CmdSharp Now</a>
+
+    <section class="hero">
+        <div class="hero-content">
+            <!-- <div class="hero-badge">🚀 Revolutionary AI Invoicing</div> -->
+            <h1>Command Your Invoicing</h1>
+            <p class="hero-subtitle">
+                Create professional invoices in seconds with voice commands and intelligent shortcuts. 
+                The future of business automation is here.
+            </p>
+            
+            <div class="command-showcase">
+                <p style="margin-bottom: 1rem; color: var(--text-muted);">Just say or type:</p>
+                <div class="command-demo" id="demo-command">
+                    I @john #web $500 /30 notes:urgent project<span class="typing-cursor">|</span>
+                </div>
+                <p style="margin-top: 1rem; color: var(--neon-green);">✨ Professional invoice created instantly!</p>
+            </div>
+
+            <div class="cta-buttons">
+                <a href="#pricing" class="btn btn-primary">Get Started Now</a>
+                <a href="#features" class="btn btn-secondary">See Features</a>
             </div>
         </div>
     </section>
 
     <section class="features" id="features">
-        <div class="container">
-            <h2>Revolutionary Features</h2>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Lightning Command System</h3>
-                    <p>Type "I @customer #service $amount" and create professional invoices in 2 seconds. World's fastest invoicing system.</p>
-                </div>
+        <div class="section-header fade-in">
+            <h2 class="section-title">Powerful Features</h2>
+            <p class="section-subtitle">Everything you need to streamline your invoicing process</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card fade-in">
+                <span class="feature-icon">⚡</span>
+                <h3>Lightning Commands</h3>
+                <p>Type simple commands like "I @client #service $amount" and generate professional invoices in 2 seconds. World's fastest invoicing system.</p>
+            </div>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🎤</div>
-                    <h3>Voice-to-Invoice Technology</h3>
-                    <p>Speak naturally: "Create invoice for John Smith, web design, 500 dollars" - AI understands and creates professional invoices.</p>
-                </div>
+            <div class="feature-card fade-in">
+                <span class="feature-icon">🎤</span>
+                <h3>Voice Intelligence</h3>
+                <p>Speak naturally: "Create invoice for John Smith, web design, 500 dollars" - Advanced AI understands and creates professional invoices.</p>
+            </div>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🧠</div>
-                    <h3>Intelligent Shortcut Parser</h3>
-                    <p>Custom shortcuts that expand into full business context. @customer becomes full contact details, #service becomes complete descriptions.</p>
-                </div>
+            <div class="feature-card fade-in">
+                <span class="feature-icon">🧠</span>
+                <h3>Smart Shortcuts</h3>
+                <p>Custom shortcuts that expand into full business context. @customer becomes complete contact details, #service becomes full descriptions.</p>
+            </div>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🏢</div>
-                    <h3>Professional Business Center</h3>
-                    <p>One-command branding, automatic tax calculations, customer intelligence, and Fortune 500 quality PDF generation.</p>
-                </div>
+            <div class="feature-card fade-in">
+                <span class="feature-icon">🏢</span>
+                <h3>Professional Output</h3>
+                <p>One-command branding, automatic tax calculations, customer intelligence, and Fortune 500 quality PDF generation.</p>
+            </div>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Business Intelligence Dashboard</h3>
-                    <p>Advanced analytics with debtors age analysis, sales reporting, customer insights, and performance metrics.</p>
-                </div>
+            <div class="feature-card fade-in">
+                <span class="feature-icon">📊</span>
+                <h3>Business Analytics</h3>
+                <p>Advanced insights with debtors age analysis, sales reporting, customer analytics, and performance metrics.</p>
+            </div>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3>AI Customer Intelligence</h3>
-                    <p>Remembers customer preferences, suggests services, auto-completes details, and learns from your invoicing patterns.</p>
-                </div>
+            <div class="feature-card fade-in">
+                <span class="feature-icon">🎯</span>
+                <h3>AI Learning</h3>
+                <p>Remembers customer preferences, suggests services, auto-completes details, and learns from your invoicing patterns.</p>
             </div>
         </div>
     </section>
 
-    <section class="how-it-works" id="how-it-works">
-        <div class="container">
-            <h2>How It Works</h2>
-            
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Type or Speak</h3>
-                    <p>Use shortcuts like "I @john #web $500" or speak naturally "Create invoice for John, web design, 500 dollars"</p>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>AI Processes</h3>
-                    <p>Advanced AI understands your command, expands shortcuts, fills in customer details, and calculates totals</p>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Professional Output</h3>
-                    <p>Generate beautiful, professional PDF invoices with your branding, ready to send to clients</p>
-                </div>
-            </div>
+    <section class="video-showcase" id="demo">
+        <div class="section-header fade-in">
+            <h2 class="section-title">See CmdSharp in Action</h2>
+            <p class="section-subtitle">Watch how easy it is to create professional invoices with voice commands</p>
         </div>
-    </section>
-   
-    <div style="margin-top: 4rem; text-align: center;">
-        <h3>Watch It in Action</h3>
-        <div style="position: relative; padding-bottom: 56.25%; height: 0; max-width: 560px; margin: 1rem auto;">
-            <iframe src="https://www.youtube.com/embed/nlOy4FJ40dw" 
+        
+        <div class="video-container fade-in">
+            <div class="video-wrapper">
+                <iframe 
+                    src="https://www.youtube.com/embed/nlOy4FJ40dw" 
                     frameborder="0" 
                     allowfullscreen 
-                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-            </iframe>
-        </div>
-    </div>
-
-        <section class="pricing" id="pricing">
-        <div class="container">
-            <h2>Special Launch Pricing</h2>
-            
-            <div class="pricing-card">
-                <h3>CmdSharp Lifetime License</h3>
-                <div class="price" id="pricing-display">
-                    <span id="price-amount">$39</span>
-                    <span id="price-currency">USD</span>
-                </div>
-                <p class="price-note" id="price-note">One-time payment • Lifetime access • All features included</p>
-                <p id="price-context">Regular price: $299/year</p>
-                <p>Save 87% + no recurring fees!</p>
-                <button class="cta-button" id="get-license-btn" onclick="initiatePurchase()">
-                    <span id="btn-text">Get Lifetime Access</span>
-                    <span id="btn-loading" style="display: none;">🌍 Detecting location...</span>
-                </button>
-                <p id="location-info" style="font-size: 0.9rem; margin-top: 1rem; opacity: 0.8; display: none;">
-                    <span id="location-text"></span>
-                </p>
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    title="CmdSharp Demo Video">
+                </iframe>
             </div>
-
-            <div style="margin-top: 2rem;">
-                <h3>What's Included:</h3>
-                <ul style="text-align: left; display: inline-block; margin-top: 1rem;">
-                    <li>✅ Lightning-fast shortcut system</li>
-                    <li>✅ Advanced voice recognition</li>
-                    <li>✅ Professional PDF generation</li>
-                    <li>✅ Business intelligence dashboard</li>
-                    <li>✅ Customer & service management</li>
-                    <li>✅ All future updates included</li>
+            <div class="video-details">
+                <h3>🎥 Product Demo</h3>
+                <p>See how CmdSharp revolutionizes invoicing with AI-powered voice commands and intelligent shortcuts.</p>
+                <ul class="demo-highlights">
+                    <li>Voice-to-invoice technology</li>
+                    <li>Lightning-fast shortcut system</li>
+                    <li>Professional PDF generation</li>
+                    <li>Real-time business intelligence</li>
                 </ul>
             </div>
         </div>
     </section>
 
     <section class="documentation" id="documentation">
-        <div class="container">
-            <h2>Documentation & Help</h2>
-            
-            <div class="doc-section">
-                <h3>📝 Basic Invoice Commands</h3>
-                <div class="shortcut-examples">
-                    <div class="shortcut-list">
-                        <div class="shortcut-item">
-                            <strong>Basic Invoice:</strong><br>
-                            <code>I @customer #service $amount</code><br>
-                            <em>Creates invoice for customer with specified service and amount</em>
+        <div class="section-header fade-in">
+            <h2 class="section-title">Documentation & Help</h2>
+            <p class="section-subtitle">Master CmdSharp's powerful command system</p>
+        </div>
+        
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 2rem;">
+            <div class="doc-section fade-in">
+                <h3 style="color: var(--neon-green); font-size: 1.8rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.5rem;">
+                    📝 Basic Invoice Commands
+                </h3>
+                <div class="doc-examples">
+                    <div class="doc-grid">
+                        <div class="doc-card">
+                            <h4>Basic Invoice</h4>
+                            <code>I @customer #service $amount</code>
+                            <p>Creates invoice for customer with specified service and amount</p>
                         </div>
-                        <div class="shortcut-item">
-                            <strong>With Due Date:</strong><br>
-                            <code>I @john #web $500 /30</code><br>
-                            <em>Invoice due in 30 days from today</em>
+                        <div class="doc-card">
+                            <h4>With Due Date</h4>
+                            <code>I @john #web $500 /30</code>
+                            <p>Invoice due in 30 days from today</p>
                         </div>
-                        <div class="shortcut-item">
-                            <strong>With Quantity:</strong><br>
-                            <code>I @acme #logo qty:3 $250</code><br>
-                            <em>3 logo designs at $250 each</em>
+                        <div class="doc-card">
+                            <h4>With Quantity</h4>
+                            <code>I @acme #logo qty:3 $250</code>
+                            <p>3 logo designs at $250 each</p>
                         </div>
-                        <div class="shortcut-item">
-                            <strong>With Email:</strong><br>
-                            <code>I @client em:john@company.com #consulting $1000</code><br>
-                            <em>Includes email address in invoice</em>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h3>🎤 Voice Commands</h3>
-                <div class="shortcut-examples">
-                    <div class="shortcut-list">
-                        <div class="shortcut-item">
-                            <strong>Natural Speech:</strong><br>
-                            <em>"Create invoice for TechCorp, website development, 2500 dollars, due in 15 days"</em>
-                        </div>
-                        <div class="shortcut-item">
-                            <strong>Multiple Items:</strong><br>
-                            <em>"Invoice for ABC Company, 3 logo designs at 200 each, 1 business card design 150 dollars"</em>
-                        </div>
-                        <div class="shortcut-item">
-                            <strong>With Notes:</strong><br>
-                            <em>"Create quote for StartupXYZ, mobile app development, 5000 dollars, note that this is phase one"</em>
+                        <div class="doc-card">
+                            <h4>With Email</h4>
+                            <code>I @client em:john@company.com #consulting $1000</code>
+                            <p>Includes email address in invoice</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="doc-section">
-                <h3>⚡ Advanced Shortcuts</h3>
-                <div class="shortcut-examples">
-                    <div class="shortcut-list">
-                        <div class="shortcut-item">
-                            <strong>Discounts:</strong><br>
-                            <code>I @john #web $500 disc:10%</code><br>
-                            <em>Applies 10% discount to invoice</em>
+            <div class="doc-section fade-in">
+                <h3 style="color: var(--neon-blue); font-size: 1.8rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.5rem;">
+                    🎤 Voice Commands
+                </h3>
+                <div class="doc-examples">
+                    <div class="doc-grid">
+                        <div class="doc-card">
+                            <h4>Natural Speech</h4>
+                            <p style="font-style: italic; color: var(--neon-blue);">"Create invoice for TechCorp, website development, 2500 dollars, due in 15 days"</p>
                         </div>
-                        <div class="shortcut-item">
-                            <strong>Notes:</strong><br>
-                            <code>I @client #service $300 notes:urgent project</code><br>
-                            <em>Adds notes to invoice</em>
+                        <div class="doc-card">
+                            <h4>Multiple Items</h4>
+                            <p style="font-style: italic; color: var(--neon-blue);">"Invoice for ABC Company, 3 logo designs at 200 each, 1 business card design 150 dollars"</p>
                         </div>
-                        <div class="shortcut-item">
-                            <strong>Deposits (Quotes):</strong><br>
-                            <code>Q @startup #app $5000 dep:25%</code><br>
-                            <em>Quote with 25% deposit required</em>
-                        </div>
-                        <div class="shortcut-item">
-                            <strong>Multiple Services:</strong><br>
-                            <code>I @company #web $800 + #logo $300 + #seo $500</code><br>
-                            <em>Invoice with multiple services</em>
+                        <div class="doc-card">
+                            <h4>With Notes</h4>
+                            <p style="font-style: italic; color: var(--neon-blue);">"Create quote for StartupXYZ, mobile app development, 5000 dollars, note that this is phase one"</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="doc-section">
-                <h3>🏢 Business Management</h3>
-                <div class="shortcut-examples">
-                    <div class="shortcut-list">
-                        <div class="shortcut-item">
-                            <strong>Customer Management:</strong><br>
-                            <em>Add customers with @shortcut for quick access</em>
+            <div class="doc-section fade-in">
+                <h3 style="color: var(--neon-purple); font-size: 1.8rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.5rem;">
+                    ⚡ Advanced Shortcuts
+                </h3>
+                <div class="doc-examples">
+                    <div class="doc-grid">
+                        <div class="doc-card">
+                            <h4>Discounts</h4>
+                            <code>I @john #web $500 disc:10%</code>
+                            <p>Applies 10% discount to invoice</p>
                         </div>
-                        <div class="shortcut-item">
-                            <strong>Service Library:</strong><br>
-                            <em>Create #shortcuts for common services with preset prices</em>
+                        <div class="doc-card">
+                            <h4>Notes</h4>
+                            <code>I @client #service $300 notes:urgent project</code>
+                            <p>Adds notes to invoice</p>
                         </div>
-                        <div class="shortcut-item">
-                            <strong>Professional Branding:</strong><br>
-                            <em>Upload logo and business details for all invoices</em>
+                        <div class="doc-card">
+                            <h4>Deposits (Quotes)</h4>
+                            <code>Q @startup #app $5000 dep:25%</code>
+                            <p>Quote with 25% deposit required</p>
                         </div>
-                        <div class="shortcut-item">
-                            <strong>Tax Configuration:</strong><br>
-                            <em>Set tax rates and preferences for automatic calculations</em>
+                        <div class="doc-card">
+                            <h4>Multiple Services</h4>
+                            <code>I @company #web $800 + #logo $300 + #seo $500</code>
+                            <p>Invoice with multiple services</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="doc-section">
-                <h3>📊 Reporting & Analytics</h3>
-                <div class="shortcut-examples">
-                    <div class="shortcut-list">
-                        <div class="shortcut-item">
-                            <strong>Revenue Tracking:</strong><br>
-                            <em>Monthly, quarterly, and yearly revenue reports</em>
+            <div class="doc-section fade-in">
+                <h3 style="color: var(--neon-green); font-size: 1.8rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.5rem;">
+                    🏢 Business Management
+                </h3>
+                <div class="doc-examples">
+                    <div class="doc-grid">
+                        <div class="doc-card">
+                            <h4>Customer Management</h4>
+                            <p>Add customers with @shortcut for quick access</p>
                         </div>
-                        <div class="shortcut-item">
-                            <strong>Debtors Age Analysis:</strong><br>
-                            <em>0-30, 31-60, 61-90, 91-120, 120+ day aging reports</em>
+                        <div class="doc-card">
+                            <h4>Service Library</h4>
+                            <p>Create #shortcuts for common services with preset prices</p>
                         </div>
-                        <div class="shortcut-item">
-                            <strong>Customer Insights:</strong><br>
-                            <em>Top customers, payment patterns, and service preferences</em>
+                        <div class="doc-card">
+                            <h4>Professional Branding</h4>
+                            <p>Upload logo and business details for all invoices</p>
                         </div>
-                        <div class="shortcut-item">
-                            <strong>Performance Metrics:</strong><br>
-                            <em>Track your invoicing speed and efficiency gains</em>
+                        <div class="doc-card">
+                            <h4>Tax Configuration</h4>
+                            <p>Set tax rates and preferences for automatic calculations</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="doc-section fade-in">
+                <h3 style="color: var(--neon-blue); font-size: 1.8rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.5rem;">
+                    📊 Reporting & Analytics
+                </h3>
+                <div class="doc-examples">
+                    <div class="doc-grid">
+                        <div class="doc-card">
+                            <h4>Revenue Tracking</h4>
+                            <p>Monthly, quarterly, and yearly revenue reports</p>
+                        </div>
+                        <div class="doc-card">
+                            <h4>Debtors Age Analysis</h4>
+                            <p>0-30, 31-60, 61-90, 91-120, 120+ day aging reports</p>
+                        </div>
+                        <div class="doc-card">
+                            <h4>Customer Insights</h4>
+                            <p>Top customers, payment patterns, and service preferences</p>
+                        </div>
+                        <div class="doc-card">
+                            <h4>Performance Metrics</h4>
+                            <p>Track your invoicing speed and efficiency gains</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <section style="background: #ffd700; padding: 2rem; text-align: center;">
-  <h2 style="color:#000;">Still scrolling? Start invoicing smarter today 🧠⚡</h2>
-  <a href="#pricing" class="cta-button" style="margin-top: 1rem;">Get CmdSharp Now</a>
-</section>
 
+    <section style="background: linear-gradient(135deg, var(--neon-green), var(--neon-blue)); padding: 4rem 2rem; text-align: center; margin: 4rem 0;">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <h2 style="color: var(--primary-dark); font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">
+                Ready to revolutionize your invoicing?
+            </h2>
+            <p style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
+                Join thousands of businesses already using CmdSharp to streamline their billing process
+            </p>
+            <a href="#pricing" class="btn" style="background: var(--primary-dark); color: var(--neon-green); padding: 1rem 2rem; font-weight: 600;">
+                Get Started Today
+            </a>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="section-header fade-in">
+            <h2 class="section-title">Special Launch Pricing</h2>
+            <p class="section-subtitle">Get lifetime access at a fraction of the regular price</p>
+        </div>
+        
+        <div class="pricing-card fade-in">
+            <h3>CmdSharp Lifetime License</h3>
+            <div class="price-display" id="pricing-display">
+                <span id="price-amount">$39</span>
+                <span id="price-currency" style="font-size: 1.5rem;">USD</span>
+            </div>
+            <p class="price-note" id="price-note">One-time payment • Lifetime access • All features included</p>
+            <p id="price-context" style="color: var(--text-muted); margin-bottom: 1rem;">Regular price: $299/year</p>
+            <p style="color: var(--neon-green); font-weight: 600; margin-bottom: 2rem;">Save 87% + no recurring fees!</p>
+            
+            <ul class="features-list">
+                <li>Lightning-fast shortcut system</li>
+                <li>Advanced voice recognition</li>
+                <li>Professional PDF generation</li>
+                <li>Business intelligence dashboard</li>
+                <li>Customer & service management</li>
+                <li>All future updates included</li>
+            </ul>
+            
+            <button class="btn btn-primary" id="get-license-btn" onclick="initiatePurchase()" style="width: 100%; margin-top: 1rem;">
+                <span id="btn-text">Get Lifetime Access</span>
+                <span id="btn-loading" style="display: none;">🌍 Detecting location...</span>
+            </button>
+            
+            <p id="location-info" style="font-size: 0.9rem; margin-top: 1rem; color: var(--text-muted); display: none;">
+                <span id="location-text"></span>
+            </p>
+        </div>
+    </section>
 
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>CmdSharp</h4>
-                    <p>Command your invoicing with lightning-fast shortcuts and AI intelligence.</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Features</h4>
-                    <a href="#features">Lightning Commands</a>
-                    <a href="#features">Voice Recognition</a>
-                    <a href="#features">Business Intelligence</a>
-                    <a href="#features">Professional PDFs</a>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Support</h4>
-                    <a href="mailto:support@proviska.com">Email Support</a>
-                    <a href="#documentation">Documentation</a>
-                    <a href="#how-it-works">How It Works</a>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Company</h4>
-                    <a href="/privacy.html">Privacy Policy</a>
-                    <a href="/terms.html"">Terms of Service</a>
-                </div>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>CmdSharp</h4>
+                <p>Revolutionary AI-powered invoicing that understands your business needs.</p>
             </div>
             
-            <div style="border-top: 1px solid #555; padding-top: 1rem; margin-top: 2rem;">
-                <p>&copy; 2024 CmdSharp by Proviska. All rights reserved.</p>
-                <p>Command your success with the world's fastest invoicing system.</p>
+            <div class="footer-section">
+                <h4>Features</h4>
+                <a href="#features">Lightning Commands</a>
+                <a href="#features">Voice Recognition</a>
+                <a href="#features">Business Intelligence</a>
+                <a href="#features">Professional PDFs</a>
             </div>
+            
+            <div class="footer-section">
+                <h4>Support</h4>
+                <a href="mailto:support@proviska.com">Email Support</a>
+                <a href="#pricing">Get Started</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <a href="/privacy.html">Privacy Policy</a>
+                <a href="/terms.html">Terms of Service</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 CmdSharp by Proviska. All rights reserved.</p>
+            <p>Command your success with the world's fastest invoicing system.</p>
         </div>
     </footer>
 
     <script>
-        // Simple scroll animation
+        // Header scroll effect
         window.addEventListener('scroll', () => {
-            const elements = document.querySelectorAll('.feature-card, .step');
-            elements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                const elementVisible = 150;
-                
-                if (elementTop < window.innerHeight - elementVisible) {
-                    element.classList.add('animate-in');
+            const header = document.getElementById('header');
+            
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Fade in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
                 }
             });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
         });
 
         // Smooth scrolling for navigation links
@@ -745,42 +1108,40 @@
 
         // Dynamic command demo
         const commands = [
-            'I @john #web $500 /day notes:urgent project',
-            'I @acme #logo qty:3 $250 disc:10',
-            'Q @startup #app $5000 dep:25 due:60',
+            'I @john #web $500 /30 notes:urgent project',
+            'I @acme #logo qty:3 $250 disc:10%',
+            'Q @startup #app $5000 dep:25% due:60',
             'I @client em:ceo@company.com #consulting $1200'
         ];
 
         let currentCommand = 0;
-        const commandDemo = document.querySelector('.command-demo');
+        const commandDemo = document.getElementById('demo-command');
         
         if (commandDemo) {
             setInterval(() => {
                 currentCommand = (currentCommand + 1) % commands.length;
-                commandDemo.textContent = commands[currentCommand];
-            }, 3000);
+                commandDemo.innerHTML = commands[currentCommand] + '<span class="typing-cursor">|</span>';
+            }, 4000);
         }
 
-        // Geo-location based pricing and checkout
+        // Geo-location based pricing and checkout (same as original)
         let userLocation = null;
         let pricingData = {};
 
-        // Detect user location on page load
         async function detectLocation() {
             try {
-                // Fetch location and pricing data in parallel
-                  const urlParams = new URLSearchParams(window.location.search);
-                  const forceCountry = urlParams.get('country');
+                const urlParams = new URLSearchParams(window.location.search);
+                const forceCountry = urlParams.get('country');
 
-                  const locationUrl = new URL('https://ai.proviska.com/api/get-location.php');
-                  if (forceCountry) {
-                      locationUrl.searchParams.set('country', forceCountry);
-                  }
+                const locationUrl = new URL('https://ai.proviska.com/api/get-location.php');
+                if (forceCountry) {
+                    locationUrl.searchParams.set('country', forceCountry);
+                }
 
-                  const [locationResponse, pricingResponse] = await Promise.all([
-                     fetch(locationUrl.toString()),
-                     fetch('https://ai.proviska.com/api/pricing-config.php')
-                  ]);
+                const [locationResponse, pricingResponse] = await Promise.all([
+                   fetch(locationUrl.toString()),
+                   fetch('https://ai.proviska.com/api/pricing-config.php')
+                ]);
                 
                 const locationData = await locationResponse.json();
                 const pricingResult = await pricingResponse.json();
@@ -789,12 +1150,10 @@
                     userLocation = locationData;
                 } else {
                     console.error('Location detection failed:', locationData.message);
-                    // Default to US location
                     userLocation = { country: 'US', currency: 'USD' };
                 }
                 
                 if (pricingResult.success) {
-                    // Convert pricing array to object for easier lookup
                     pricingData = {};
                     pricingResult.pricing.forEach(config => {
                         pricingData[config.country] = {
@@ -809,7 +1168,6 @@
                         };
                     });
                     
-                    // Add fallback for international users if no specific country pricing
                     if (!pricingData[userLocation.country] && !pricingData['US']) {
                         pricingData['US'] = {
                             amount: '$39',
@@ -824,7 +1182,6 @@
                     }
                 } else {
                     console.error('Pricing fetch failed:', pricingResult.message);
-                    // Default pricing
                     pricingData = {
                         'ZA': { amount: 'R599', currency: 'ZAR', symbol: 'R', price: 599, regular_price: 4499, payment_gateway: 'payfast', note: 'One-time payment • Lifetime access • All features included', context: 'Regular price: R4,499/year' },
                         'US': { amount: '$39', currency: 'USD', symbol: '$', price: 39, regular_price: 299, payment_gateway: 'lemonsqueezy', note: 'One-time payment • Lifetime access • All features included', context: 'Regular price: $299/year' }
@@ -836,7 +1193,6 @@
                 
             } catch (error) {
                 console.error('Error detecting location or fetching pricing:', error);
-                // Default to US pricing
                 userLocation = { country: 'US', currency: 'USD' };
                 pricingData = {
                     'ZA': { amount: 'R599', currency: 'ZAR', symbol: 'R', price: 599, regular_price: 4499, payment_gateway: 'payfast', note: 'One-time payment • Lifetime access • All features included', context: 'Regular price: R4,499/year' },
@@ -846,7 +1202,6 @@
             }
         }
 
-        // Update pricing display based on location
         function updatePricingDisplay() {
             if (!userLocation || !pricingData) return;
 
@@ -858,17 +1213,13 @@
                 return;
             }
             
-            // Update pricing elements
             document.getElementById('price-amount').textContent = pricing.amount;
             document.getElementById('price-currency').textContent = pricing.currency;
             document.getElementById('price-note').textContent = pricing.note;
             document.getElementById('price-context').textContent = pricing.context;
-            
-            // Update button text
             document.getElementById('btn-text').textContent = `Get Lifetime Access (${pricing.amount})`;
         }
 
-        // Show location info
         function showLocationInfo() {
             if (!userLocation || !pricingData) return;
 
@@ -889,25 +1240,21 @@
             locationInfo.style.display = 'block';
         }
 
-        // Initiate purchase based on location
         async function initiatePurchase() {
             if (!userLocation) {
                 alert('Please wait while we detect your location...');
                 return;
             }
 
-            // Show loading state
             document.getElementById('btn-text').style.display = 'none';
             document.getElementById('btn-loading').style.display = 'inline';
             
             try {
-                // Redirect to checkout page to collect customer info
                 window.location.href = 'https://checkout.cmdsharp.com/';
             } catch (error) {
                 console.error('Checkout error:', error);
                 alert('Sorry, there was an error processing your request. Please try again.');
                 
-                // Reset button state
                 document.getElementById('btn-text').style.display = 'inline';
                 document.getElementById('btn-loading').style.display = 'none';
             }
