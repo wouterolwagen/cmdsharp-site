@@ -1184,8 +1184,8 @@
                 } else {
                     console.error('Pricing fetch failed:', pricingResult.message);
                     pricingData = {
-                        'ZA': { amount: 'R599', currency: 'ZAR', symbol: 'R', price: 599, regular_price: 4499, payment_gateway: 'payfast', note: 'One-time payment • Lifetime access • All features included', context: 'Regular price: R4,499/year' },
-                        'US': { amount: '$39', currency: 'USD', symbol: '$', price: 39, regular_price: 299, payment_gateway: 'lemonsqueezy', note: 'One-time payment • Lifetime access • All features included', context: 'Regular price: $299/year' }
+                        'ZA': { amount: 'R499', currency: 'ZAR', symbol: 'R', price: 499, regular_price: 4499, payment_gateway: 'payfast', note: 'One-time payment • Lifetime access • All features included', context: 'Regular price: R4,499/year' },
+                        'US': { amount: '$49', currency: 'USD', symbol: '$', price: 49, regular_price: 299, payment_gateway: 'lemonsqueezy', note: 'One-time payment • Lifetime access • All features included', context: 'Regular price: $299/year' }
                     };
                 }
                 
@@ -1196,8 +1196,8 @@
                 console.error('Error detecting location or fetching pricing:', error);
                 userLocation = { country: 'US', currency: 'USD' };
                 pricingData = {
-                    'ZA': { amount: 'R599', currency: 'ZAR', symbol: 'R', price: 599, regular_price: 4499, payment_gateway: 'payfast', note: 'One-time payment • Lifetime access • All features included', context: 'Regular price: R4,499/year' },
-                    'US': { amount: '$39', currency: 'USD', symbol: '$', price: 39, regular_price: 299, payment_gateway: 'lemonsqueezy', note: 'One-time payment • Lifetime access • All features included', context: 'Regular price: $299/year' }
+                    'ZA': { amount: 'R499', currency: 'ZAR', symbol: 'R', price: 499, regular_price: 4499, payment_gateway: 'payfast', note: 'One-time payment • Lifetime access • All features included', context: 'Regular price: R4,499/year' },
+                    'US': { amount: '$49', currency: 'USD', symbol: '$', price: 49, regular_price: 299, payment_gateway: 'lemonsqueezy', note: 'One-time payment • Lifetime access • All features included', context: 'Regular price: $299/year' }
                 };
                 updatePricingDisplay();
             }
