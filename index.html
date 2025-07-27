@@ -671,10 +671,25 @@
             color: var(--text-muted);
         }
 
+        /* Demo Download Button */
+        .demo-download-btn {
+            display: none;
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
+            }
+            
+            .demo-download-btn {
+                display: block;
+            }
+            
+            .demo-download-btn .btn {
+                padding: 0.7rem 1.5rem;
+                font-size: 0.9rem;
+                border-radius: 25px;
             }
             
             .hero {
@@ -738,14 +753,20 @@
             </a>
             <ul class="nav-links">
                 <li><a href="#features">Features</a></li>
-                <li>
-                    <a style="color: black;" href="https://ai.proviska.com/api/demo-download.php" class="btn btn-primary">
-                        Download Demo APK
-                    </a>
-                </li>
+                <li><a href="#demo">Demo</a></li>
                 <li><a href="#documentation">Documentation</a></li>
                 <li><a href="#pricing">Pricing</a></li>
+                <li>
+                    <a href="https://ai.proviska.com/api/demo-download.php" class="btn btn-primary" style="color: var(--primary-dark); padding: 0.6rem 1.2rem; font-size: 0.9rem;">
+                        Demo APK
+                    </a>
+                </li>
             </ul>
+            <div class="demo-download-btn">
+                <a href="https://ai.proviska.com/api/demo-download.php" class="btn btn-primary">
+                    📱 Demo APK
+                </a>
+            </div>
         </nav>
     </header>
 
