@@ -805,13 +805,13 @@
             <div class="feature-card fade-in">
                 <span class="feature-icon">⚡</span>
                 <h3>Lightning Commands</h3>
-                <p>Type simple commands like "I @client #service $amount" and generate professional invoices in 2 seconds. World's fastest invoicing system.</p>
+                <p>Type simple commands like "I @client #service $amount" and generate professional invoices in seconds. World's fastest invoicing system.</p>
             </div>
 
             <div class="feature-card fade-in">
                 <span class="feature-icon">🎤</span>
                 <h3>Voice Intelligence</h3>
-                <p>Speak naturally: "Create invoice for John Smith, web design, 500 dollars" - Advanced AI understands and creates professional invoices.</p>
+                <p>Speak naturally: “Invoice John Smith for web design 500 dollars” - Advanced AI understands and creates professional invoices.</p>
             </div>
 
             <div class="feature-card fade-in">
@@ -834,8 +834,8 @@
 
             <div class="feature-card fade-in">
                 <span class="feature-icon">🎯</span>
-                <h3>AI Learning</h3>
-                <p>Remembers customer preferences, suggests services, auto-completes details, and learns from your invoicing patterns.</p>
+                <h3>Status Tracking</h3>
+                <p>Monitor quote and invoice progress - from sent to accepted, paid or overdue.</p>
             </div>
         </div>
     </section>
@@ -890,17 +890,17 @@
                         </div>
                         <div class="doc-card">
                             <h4>With Due Date</h4>
-                            <code>I @john #web $500 /30</code>
+                            <code>I @john_smith #web $500 due:30</code>
                             <p>Invoice due in 30 days from today</p>
                         </div>
                         <div class="doc-card">
                             <h4>With Quantity</h4>
-                            <code>I @acme #logo qty:3 $250</code>
+                            <code>I @acme #logo $250 qty:3</code>
                             <p>3 logo designs at $250 each</p>
                         </div>
                         <div class="doc-card">
                             <h4>With Email</h4>
-                            <code>I @client em:john@company.com #consulting $1000</code>
+                            <code>I @peter_smith #consulting $1000 em:peter@company.com</code>
                             <p>Includes email address in invoice</p>
                         </div>
                     </div>
@@ -915,15 +915,15 @@
                     <div class="doc-grid">
                         <div class="doc-card">
                             <h4>Natural Speech</h4>
-                            <p style="font-style: italic; color: var(--neon-blue);">"Create invoice for TechCorp, website development, 2500 dollars, due in 15 days"</p>
+                            <p style="font-style: italic; color: var(--neon-blue);">"Invoice TechCorp for website development 2500 dollars due 15"</p>
                         </div>
                         <div class="doc-card">
                             <h4>Multiple Items</h4>
-                            <p style="font-style: italic; color: var(--neon-blue);">"Invoice for ABC Company, 3 logo designs at 200 each, 1 business card design 150 dollars"</p>
+                            <p style="font-style: italic; color: var(--neon-blue);">"Invoice ABC Company for business card design 150 dollars and logo design 200 dollars quantity 3"</p>
                         </div>
                         <div class="doc-card">
                             <h4>With Notes</h4>
-                            <p style="font-style: italic; color: var(--neon-blue);">"Create quote for StartupXYZ, mobile app development, 5000 dollars, note that this is phase one"</p>
+                            <p style="font-style: italic; color: var(--neon-blue);">"Quote StartupXYZ for mobile app development 5000 dollars notes phase one"</p>
                         </div>
                     </div>
                 </div>
@@ -937,19 +937,19 @@
                     <div class="doc-grid">
                         <div class="doc-card">
                             <h4>Discounts</h4>
-                            <code>I @john #web $500 disc:10%</code>
+                            <code>I @john #web $500 disc:10</code>
                             <p>Applies 10% discount to invoice</p>
                         </div>
                         <div class="doc-card">
                             <h4>Notes</h4>
-                            <code>I @client #service $300 notes:urgent project</code>
+                            <code>I @client #service $300 notes:urgent_project</code>
                             <p>Adds notes to invoice</p>
                         </div>
-                        <div class="doc-card">
+                        <!-- <div class="doc-card">
                             <h4>Deposits (Quotes)</h4>
                             <code>Q @startup #app $5000 dep:25%</code>
                             <p>Quote with 25% deposit required</p>
-                        </div>
+                        </div> -->
                         <div class="doc-card">
                             <h4>Multiple Services</h4>
                             <code>I @company #web $800 + #logo $300 + #seo $500</code>
@@ -971,7 +971,7 @@
                         </div>
                         <div class="doc-card">
                             <h4>Service Library</h4>
-                            <p>Create #shortcuts for common services with preset prices</p>
+                            <p>Create #shortcuts for easy service selection</p>
                         </div>
                         <div class="doc-card">
                             <h4>Professional Branding</h4>
@@ -1003,10 +1003,10 @@
                             <h4>Customer Insights</h4>
                             <p>Top customers, payment patterns, and service preferences</p>
                         </div>
-                        <div class="doc-card">
+                        <!-- <div class="doc-card">
                             <h4>Performance Metrics</h4>
                             <p>Track your invoicing speed and efficiency gains</p>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -1067,7 +1067,7 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h4>CmdSharp</h4>
-                <p>Revolutionary AI-powered invoicing that understands your business needs.</p>
+                <p>Revolutionary AI-assisted invoicing that understands your business needs.</p>
             </div>
             
             <div class="footer-section">
@@ -1143,10 +1143,10 @@
 
         // Dynamic command demo
         const commands = [
-            'I @john #web $500 /30 notes:urgent project',
-            'I @acme #logo qty:3 $250 disc:10%',
-            'Q @startup #app $5000 dep:25% due:60',
-            'I @client em:ceo@company.com #consulting $1200'
+            'Q @ABC_company #consulting $150 em:jane@abc.com',
+            'I @tech_company #website $300 due:30',
+            'I @john_smith #app $2500 notes:urgent',
+            'I @peter_smith #logo $250 + #flyers $20',
         ];
 
         let currentCommand = 0;
