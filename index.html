@@ -671,6 +671,17 @@
             color: var(--text-muted);
         }
 
+        /* Product Hunt Badge */
+        .product-hunt-badge {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .product-hunt-badge a:hover img {
+            transform: translateY(-2px);
+            filter: drop-shadow(0 5px 15px rgba(255, 255, 255, 0.2));
+        }
+
         /* Demo Download Button */
         .demo-download-btn {
             display: none;
@@ -791,6 +802,12 @@
             <div class="cta-buttons">
                 <a href="#pricing" class="btn btn-primary">Get Started Now</a>
                 <a href="#features" class="btn btn-secondary">See Features</a>
+            </div>
+            
+            <div class="product-hunt-badge" style="margin-top: 2rem; text-align: center;">
+                <a href="https://www.producthunt.com/products/cmdsharp?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-cmdsharp" target="_blank">
+                    <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=998525&theme=neutral&t=1753694061283" alt="CmdSharp - Speak&#0044;&#0032;Type&#0044;&#0032;Command&#0032;your&#0032;invoicing | Product Hunt" style="width: 250px; height: 54px; transition: transform 0.3s ease;" width="250" height="54" />
+                </a>
             </div>
         </div>
     </section>
