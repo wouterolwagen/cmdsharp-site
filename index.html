@@ -1373,7 +1373,6 @@
                 
                 if (locationData.success) {
                     userLocation = locationData;
-                    console.log('Location detected:', userLocation.country, userLocation);
                 } else {
                     console.error('Location detection failed:', locationData.message);
                     userLocation = { country: 'US', currency: 'USD' };
@@ -1444,13 +1443,10 @@
 
         function updatePricingDisplay() {
             if (!userLocation || !pricingData) {
-                console.log('Missing data - userLocation:', userLocation, 'pricingData:', pricingData);
-                return;
+               return;
             }
 
             const country = userLocation.country;
-            console.log('Updating pricing for country:', country);
-            console.log('Available pricing data:', Object.keys(pricingData));
             
             const pricing = pricingData[country] || pricingData['US'] || Object.values(pricingData)[0];
             
@@ -1458,8 +1454,6 @@
                 console.error('No pricing data available');
                 return;
             }
-            
-            console.log('Selected pricing:', pricing);
             
             document.getElementById('price-amount').textContent = pricing.amount;
             document.getElementById('price-currency').textContent = pricing.currency;
