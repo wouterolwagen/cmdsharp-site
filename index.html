@@ -13,7 +13,7 @@
     <link rel="dns-prefetch" href="https://checkout.cmdsharp.com">
     
     <title>CmdSharp - AI Invoicing Software | Voice-Powered Invoice Generator</title>
-    <meta name="description" content="Create professional invoices in seconds with CmdSharp's AI-powered voice commands and shortcuts. Save 90% time on billing. Try free today!">
+    <meta name="description" content="Create professional invoices in 6-11 seconds with CmdSharp's AI-powered voice commands and shortcuts. Save 90% time on billing. Try free today!">
     <link rel="icon" href="images/favicon.ico" />
     <meta name="theme-color" content="#1a1a2e" />
     
@@ -25,7 +25,7 @@
     
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="CmdSharp - AI-Powered Voice Invoicing Software">
-    <meta property="og:description" content="Create professional invoices in seconds with voice commands. Revolutionary shortcut-driven invoicing app with AI intelligence. Save 90% time on billing.">
+    <meta property="og:description" content="Create professional invoices in 6-11 seconds with voice commands. Revolutionary shortcut-driven invoicing app with AI intelligence. Save 90% time on billing.">
     <meta property="og:image" content="https://cmdsharp.com/images/og-image.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -36,7 +36,7 @@
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="CmdSharp - Command Your Invoicing with AI">
-    <meta name="twitter:description" content="Revolutionary voice-powered invoicing. Create professional invoices in seconds. Save 90% time on billing tasks.">
+    <meta name="twitter:description" content="Revolutionary voice-powered invoicing. Create professional invoices in 6-11 seconds. Save 90% time on billing tasks.">
     <meta name="twitter:image" content="https://cmdsharp.com/images/twitter-card.jpg">
     <meta name="twitter:site" content="@cmdsharp">
     <meta name="twitter:creator" content="@proviska">
@@ -133,6 +133,49 @@
             padding: 0 2rem;
         }
 
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        .social-links img {
+            filter: brightness(0) invert(1);
+            transition: filter 0.3s ease;
+        }
+        /* Fix for Facebook and TikTok icons that may already be white */
+        .social-links a[aria-label="Facebook"] img,
+        .social-links a[aria-label="TikTok"] img {
+            filter: none;
+        }
+
+        .social-links a:hover img {
+            filter: brightness(0) invert(1) drop-shadow(0 0 8px var(--neon-blue));
+        }
+        /* Hover fix for Facebook and TikTok icons */
+        .social-links a[aria-label="Facebook"]:hover img,
+        .social-links a[aria-label="TikTok"]:hover img {
+            filter: drop-shadow(0 0 8px var(--neon-blue));
+        }
+
         .logo {
             display: flex;
             align-items: center;
@@ -219,14 +262,14 @@
         }
 
         .hero h1 {
-            font-size: clamp(3rem, 8vw, 6rem);
+            font-size: clamp(2rem, 5vw, 3.5rem);
             font-weight: 700;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             background: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            line-height: 1.2;
+            line-height: 1.1;
         }
 
         .hero-subtitle {
@@ -726,6 +769,18 @@
                 display: none;
             }
             
+            .nav-left {
+                gap: 1rem;
+            }
+            
+            .social-links {
+                gap: 0.75rem;
+            }
+            
+            .social-links img {
+                height: 20px;
+            }
+            
             .demo-download-btn {
                 display: block;
             }
@@ -751,6 +806,19 @@
             
             .pricing-card {
                 margin: 0 1rem;
+                padding: 2rem 1.5rem;
+            }
+            
+            .price-display {
+                font-size: 2.5rem;
+            }
+            
+            #price-amount {
+                font-size: 2.5rem !important;
+            }
+            
+            #price-currency {
+                font-size: 1.2rem !important;
             }
             
             /* Hide footer on mobile */
@@ -932,9 +1000,28 @@
 
     <header id="header">
         <nav>
-            <a href="#" class="logo">
-                <img src="images/logo-transparent.png" height="40" alt="CmdSharp - AI Invoicing Software Logo" title="CmdSharp Voice Invoice Generator">
-            </a>
+            <div class="nav-left">
+                <a href="#" class="logo">
+                    <img src="images/logo-transparent.png" height="40" alt="CmdSharp - AI Invoicing Software Logo" title="CmdSharp Voice Invoice Generator">
+                </a>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/profile.php?id=61579102259211" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                        <img src="images/social/Facebook_Logo_Primary.png" alt="Facebook" height="24">
+                    </a>
+                    <a href="https://www.instagram.com/cmdstack/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <img src="images/social/Instagram_Glyph_White.png" alt="Instagram" height="24">
+                    </a>
+                    <a href="https://x.com/cmdsharp" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                        <img src="images/social/logo-white.png" alt="X" height="24">
+                    </a>
+                    <a href="https://tiktok.com/@cmdstack" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                        <img src="images/social/TikTok_Icon_Black_Circle.png" alt="TikTok" height="24">
+                    </a>
+                    <a href="https://www.linkedin.com/in/wouterolwagen/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                        <img src="images/social/InBug-White.png" alt="LinkedIn" height="24">
+                    </a>
+                </div>
+            </div>
             <ul class="nav-links">
                 <li><a href="#features">Features</a></li>
                 <li><a href="#demo">Demo</a></li>
@@ -958,9 +1045,9 @@
     <section class="hero">
         <div class="hero-content">
             <!-- <div class="hero-badge">🚀 Revolutionary AI Invoicing</div> -->
-            <h1>AI-Powered Voice Invoicing Software - Command Your Business</h1>
+            <h1>CmdSharp - Command Your Invoicing</h1>
             <p class="hero-subtitle">
-                Create professional invoices in seconds with voice commands and intelligent shortcuts. 
+                Create professional invoices in 6-11 seconds with voice commands and intelligent shortcuts. 
                 The future of business automation is here.
             </p>
             
@@ -990,7 +1077,7 @@
             <div class="feature-card fade-in">
                 <span class="feature-icon">⚡</span>
                 <h3>Lightning-Fast Invoice Commands</h3>
-                <p>Type simple commands like "I @client #service $amount" and generate professional invoices in seconds. World's fastest invoicing system.</p>
+                <p>Type simple commands like "I @client #service $amount" and generate professional invoices in 6-11 seconds. World's fastest invoicing system.</p>
             </div>
 
             <div class="feature-card fade-in">
@@ -1053,6 +1140,42 @@
                     <li>Real-time business intelligence</li>
                 </ul>
             </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="section-header fade-in">
+            <h2 class="section-title">AI Invoice Software Pricing - Special Launch Offer</h2>
+            <p class="section-subtitle">Get lifetime access to voice invoicing software at 87% off</p>
+        </div>
+        
+        <div class="pricing-card fade-in">
+            <h3>CmdSharp Lifetime License</h3>
+            <div class="price-display" id="pricing-display">
+                <span id="price-amount">$49</span>
+                <span id="price-currency" style="font-size: 1.5rem;">USD</span>
+            </div>
+            <p class="price-note" id="price-note">One-time payment • Lifetime access • All features included</p>
+            <p id="price-context" style="color: var(--text-muted); margin-bottom: 1rem;">Regular price: $299/year</p>
+            <p style="color: var(--neon-green); font-weight: 600; margin-bottom: 2rem;">Save 87% + no recurring fees!</p>
+            
+            <ul class="features-list">
+                <li>Lightning-fast shortcut system</li>
+                <li>Advanced voice recognition</li>
+                <li>Professional PDF generation</li>
+                <li>Business intelligence dashboard</li>
+                <li>Customer & service management</li>
+                <li>All future updates included</li>
+            </ul>
+            
+            <button class="btn btn-primary" id="get-license-btn" onclick="initiatePurchase()" style="width: 100%; margin-top: 1rem;">
+                <span id="btn-text">Get Lifetime Access</span>
+                <span id="btn-loading" style="display: none;">🌍 Detecting location...</span>
+            </button>
+            
+            <p id="location-info" style="font-size: 0.9rem; margin-top: 1rem; color: var(--text-muted); display: none;">
+                <span id="location-text"></span>
+            </p>
         </div>
     </section>
 
@@ -1210,42 +1333,6 @@
             <a href="#pricing" class="btn" style="background: var(--primary-dark); color: var(--neon-green); padding: 1rem 2rem; font-weight: 600;">
                 Get Started Today
             </a>
-        </div>
-    </section>
-
-    <section class="pricing" id="pricing">
-        <div class="section-header fade-in">
-            <h2 class="section-title">AI Invoice Software Pricing - Special Launch Offer</h2>
-            <p class="section-subtitle">Get lifetime access to voice invoicing software at 87% off</p>
-        </div>
-        
-        <div class="pricing-card fade-in">
-            <h3>CmdSharp Lifetime License</h3>
-            <div class="price-display" id="pricing-display">
-                <span id="price-amount">$49</span>
-                <span id="price-currency" style="font-size: 1.5rem;">USD</span>
-            </div>
-            <p class="price-note" id="price-note">One-time payment • Lifetime access • All features included</p>
-            <p id="price-context" style="color: var(--text-muted); margin-bottom: 1rem;">Regular price: $299/year</p>
-            <p style="color: var(--neon-green); font-weight: 600; margin-bottom: 2rem;">Save 87% + no recurring fees!</p>
-            
-            <ul class="features-list">
-                <li>Lightning-fast shortcut system</li>
-                <li>Advanced voice recognition</li>
-                <li>Professional PDF generation</li>
-                <li>Business intelligence dashboard</li>
-                <li>Customer & service management</li>
-                <li>All future updates included</li>
-            </ul>
-            
-            <button class="btn btn-primary" id="get-license-btn" onclick="initiatePurchase()" style="width: 100%; margin-top: 1rem;">
-                <span id="btn-text">Get Lifetime Access</span>
-                <span id="btn-loading" style="display: none;">🌍 Detecting location...</span>
-            </button>
-            
-            <p id="location-info" style="font-size: 0.9rem; margin-top: 1rem; color: var(--text-muted); display: none;">
-                <span id="location-text"></span>
-            </p>
         </div>
     </section>
 
