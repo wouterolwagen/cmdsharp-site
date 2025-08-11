@@ -762,6 +762,11 @@
         .demo-download-btn {
             display: none;
         }
+        
+        /* Mobile Social Section - Hidden by default */
+        .mobile-social-section {
+            display: none;
+        }
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
@@ -786,16 +791,6 @@
             }
             
             .social-links {
-                gap: 0.5rem;
-                display: flex;
-            }
-            
-            .social-links img {
-                height: 18px;
-            }
-            
-            /* Hide less critical social icons on very small screens */
-            .social-links a:nth-child(n+4) {
                 display: none;
             }
             
@@ -817,6 +812,42 @@
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
+            }
+            
+            /* Show mobile social section on mobile */
+            .mobile-social-section {
+                display: block;
+                margin-top: 3rem;
+                text-align: center;
+            }
+            
+            .mobile-social-links {
+                display: flex;
+                justify-content: center;
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+            
+            .mobile-social-links a {
+                display: inline-block;
+                opacity: 0.8;
+                transition: all 0.3s ease;
+            }
+            
+            .mobile-social-links a:hover {
+                opacity: 1;
+                transform: translateY(-3px);
+            }
+            
+            .mobile-social-links img {
+                filter: brightness(0) invert(1);
+                height: 28px;
+            }
+            
+            /* Fix for Facebook and TikTok icons */
+            .mobile-social-links a[aria-label="Facebook"] img,
+            .mobile-social-links a[aria-label="TikTok"] img {
+                filter: none;
             }
             
             .features-grid {
@@ -852,21 +883,8 @@
                 height: 28px;
             }
             
-            .social-links {
-                gap: 0.4rem;
-            }
-            
-            .social-links img {
-                height: 16px;
-            }
-            
-            /* Show only top 2 social icons on very small screens */
-            .social-links a:nth-child(n+3) {
-                display: none;
-            }
-            
             .demo-download-btn .btn {
-                padding: 0.5rem 1rem;
+                padding: 0.5rem 0.9rem;
                 font-size: 0.8rem;
             }
         }
@@ -1079,7 +1097,7 @@
             </ul>
             <div class="demo-download-btn">
                 <a href="https://ai.proviska.com/demo/" class="btn btn-primary">
-                    Download
+                    Try Free
                 </a>
             </div>
         </nav>
@@ -1106,6 +1124,28 @@
             <div class="cta-buttons">
                 <a href="#pricing" class="btn btn-primary">Get Started Now</a>
                 <a href="#features" class="btn btn-secondary">See Features</a>
+            </div>
+            
+            <!-- Mobile Social Links -->
+            <div class="mobile-social-section">
+                <p style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.9rem;">Follow us for updates:</p>
+                <div class="mobile-social-links">
+                    <a href="https://www.facebook.com/profile.php?id=61579102259211" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                        <img src="images/social/Facebook_Logo_Primary.png" alt="Facebook" height="28">
+                    </a>
+                    <a href="https://www.instagram.com/cmdstack/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <img src="images/social/Instagram_Glyph_White.png" alt="Instagram" height="28">
+                    </a>
+                    <a href="https://x.com/cmdsharp" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                        <img src="images/social/logo-white.png" alt="X" height="28">
+                    </a>
+                    <a href="https://tiktok.com/@cmdstack" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                        <img src="images/social/TikTok_Icon_Black_Circle.png" alt="TikTok" height="28">
+                    </a>
+                    <a href="https://www.linkedin.com/in/wouterolwagen/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                        <img src="images/social/InBug-White.png" alt="LinkedIn" height="28">
+                    </a>
+                </div>
             </div>
 
         </div>
