@@ -1,0 +1,38 @@
+  <!DOCTYPE html>
+  <html>
+  <head>
+      <title>Connecting to Xero...</title>
+      <meta charset="utf-8">
+  </head>
+  <body>
+      <h2>🔄 Connecting to Xero...</h2>
+      <p>Redirecting back to CmdSharp app...</p>
+
+      <script>
+          // Get the authorization code from URL
+          const urlParams = new URLSearchParams(window.location.search);
+          const code = urlParams.get('code');
+          const state = urlParams.get('state');
+          const error = urlParams.get('error');
+
+          if (error) {
+              alert('Xero authorization failed: ' + error);
+          } else if (code) {
+              // Redirect back to the mobile app with the code
+              const appUrl = `cmdsharp://xero-callback?code=${code}&state=${state || ''}`;
+              window.location.href = appUrl;
+
+              // Fallback message if redirect doesn't work
+              setTimeout(() => {
+                  document.body.innerHTML = `
+                      <h2>✅ Authorization Successful!</h2>
+                      <p>Please return to the CmdSharp app to complete setup.</p>
+                      <p><small>If the app didn't open automatically, please manually switch back to CmdSharp.</small></p>
+                  `;
+              }, 2000);
+          } else {
+              document.body.innerHTML = '<h2>❌ Invalid callback - missing authorization code</h2>';
+          }
+      </script>
+  </body>
+  </html>
