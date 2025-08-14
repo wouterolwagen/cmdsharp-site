@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Successful - CmdSharp</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .success {
+            color: #28a745;
+        }
+        .icon {
+            font-size: 64px;
+            margin: 20px 0;
+        }
+        .instructions {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: left;
+            border-radius: 4px;
+        }
+        .step {
+            margin: 10px 0;
+            padding: 5px 0;
+        }
+        .step-number {
+            font-weight: bold;
+            color: #28a745;
+            margin-right: 8px;
+        }
+        .open-app-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 20px 10px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .open-app-btn:hover {
+            background: #218838;
+        }
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 12px;
+            color: #666;
+        }
+        .payment-details {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            padding: 5px 0;
+        }
+        .detail-label {
+            font-weight: bold;
+            color: #495057;
+        }
+        .detail-value {
+            color: #28a745;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon success">✅</div>
+        <h1 class="success">Payment Successful!</h1>
+        <p>Your payment has been processed successfully through PayFast.</p>
+
+        <div id="payment-details" class="payment-details">
+            <h3>Payment Details</h3>
+            <div id="amount-row" class="detail-row" style="display: none;">
+                <span class="detail-label">Amount:</span>
+                <span id="amount" class="detail-value">-</span>
+            </div>
+            <div id="reference-row" class="detail-row" style="display: none;">
+                <span class="detail-label">Reference:</span>
+                <span id="reference" class="detail-value">-</span>
+            </div>
+            <div id="transaction-row" class="detail-row" style="display: none;">
+                <span class="detail-label">Transaction ID:</span>
+                <span id="transaction-id" class="detail-value">-</span>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>📱 Next Steps:</h3>
+            <div class="step">
+                <span class="step-number">1.</span>
+                Your payment is being processed and your invoice will be updated automatically
+            </div>
+            <div class="step">
+                <span class="step-number">2.</span>
+                Return to the CmdSharp app to view your updated invoice
+            </div>
+            <div class="step">
+                <span class="step-number">3.</span>
+                Check your payment history in the Payments tab
+            </div>
+        </div>
+
+        <a href="cmdsharp://" class="open-app-btn">📱 Open CmdSharp</a>
+        <button class="open-app-btn" onclick="attemptAppOpen()" style="background: #007bff;">🔄 Try Again</button>
+
+        <div id="app-status" style="margin-top: 15px; font-size: 14px; color: #666;">
+            If CmdSharp doesn't open automatically, please manually switch back to the app.
+        </div>
+
+        <div class="footer">
+            <p><strong>CmdSharp - Quick Invoice System</strong></p>
+            <p>Secure payment processing with PayFast</p>
+            <p>Your invoice status will update automatically within a few minutes.</p>
+        </div>
+    </div>
+
+    <script>
+        // Extract payment details from URL parameters
+        function extractPaymentDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            // PayFast returns these parameters
+            const amount = urlParams.get('amount_gross') || urlParams.get('amount');
+            const reference = urlParams.get('m_payment_id') || urlParams.get('item_name');
+            const transactionId = urlParams.get('pf_payment_id') || urlParams.get('payment_id');
+            
+            // Display payment details if available
+            if (amount) {
+                document.getElementById('amount').textContent = `R${amount}`;
+                document.getElementById('amount-row').style.display = 'flex';
+            }
+            
+            if (reference) {
+                document.getElementById('reference').textContent = reference;
+                document.getElementById('reference-row').style.display = 'flex';
+            }
+            
+            if (transactionId) {
+                document.getElementById('transaction-id').textContent = transactionId;
+                document.getElementById('transaction-row').style.display = 'flex';
+            }
+            
+            // Log for debugging
+            console.log('PayFast Success Parameters:', {
+                amount,
+                reference,
+                transactionId,
+                allParams: Object.fromEntries(urlParams.entries())
+            });
+        }
+
+        function attemptAppOpen() {
+            const appUrl = 'cmdsharp://payment-success';
+            window.location.href = appUrl;
+            
+            // Update status
+            document.getElementById('app-status').innerHTML = 
+                'Attempting to open CmdSharp... <br>' +
+                'If it doesn\'t open, please switch to the app manually.';
+        }
+
+        // Try to open app automatically on page load
+        function autoOpenApp() {
+            try {
+                // Try to open the app
+                window.location.href = 'cmdsharp://payment-success';
+            } catch (e) {
+                console.log('Auto app open failed:', e);
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            extractPaymentDetails();
+            
+            // Try to open app after a short delay
+            setTimeout(autoOpenApp, 1000);
+        });
+    </script>
+</body>
+</html>
