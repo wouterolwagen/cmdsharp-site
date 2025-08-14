@@ -1,38 +1,249 @@
-  <!DOCTYPE html>
-  <html>
-  <head>
-      <title>Connecting to Xero...</title>
-      <meta charset="utf-8">
-  </head>
-  <body>
-      <h2>🔄 Connecting to Xero...</h2>
-      <p>Redirecting back to CmdSharp app...</p>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Xero Connection - CmdSharp</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .success { color: #28a745; }
+        .error { color: #dc3545; }
+        .code-container {
+            background: #f8f9fa;
+            border: 2px dashed #007bff;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            position: relative;
+        }
+        .copy-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            font-size: 14px;
+        }
+        .copy-btn:hover {
+            background: #0056b3;
+        }
+        .copy-btn:active {
+            background: #004494;
+        }
+        .instructions {
+            background: #e7f3ff;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: left;
+            border-radius: 4px;
+        }
+        .step {
+            margin: 10px 0;
+            padding: 5px 0;
+        }
+        .step-number {
+            font-weight: bold;
+            color: #007bff;
+            margin-right: 8px;
+        }
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="loading">
+            <h2>🔄 Processing Xero Authorization...</h2>
+            <p>Please wait while we process your authorization...</p>
+        </div>
 
-      <script>
-          // Get the authorization code from URL
-          const urlParams = new URLSearchParams(window.location.search);
-          const code = urlParams.get('code');
-          const state = urlParams.get('state');
-          const error = urlParams.get('error');
+        <div id="success" style="display:none;">
+            <h2 class="success">✅ Xero Authorization Successful!</h2>
+            <p>Your authorization was successful. Copy the code below and paste it into the CmdSharp app.</p>
+            
+            <div class="instructions">
+                <h3>📱 Complete Setup in CmdSharp:</h3>
+                <div class="step">
+                    <span class="step-number">1.</span>
+                    Copy the authorization code below
+                </div>
+                <div class="step">
+                    <span class="step-number">2.</span>
+                    Return to the CmdSharp app
+                </div>
+                <div class="step">
+                    <span class="step-number">3.</span>
+                    Tap "Enter Code Manually"
+                </div>
+                <div class="step">
+                    <span class="step-number">4.</span>
+                    Paste the code and tap "Connect"
+                </div>
+            </div>
 
-          if (error) {
-              alert('Xero authorization failed: ' + error);
-          } else if (code) {
-              // Redirect back to the mobile app with the code
-              const appUrl = `cmdsharp://xero-callback?code=${code}&state=${state || ''}`;
-              window.location.href = appUrl;
+            <div class="code-container">
+                <strong>Authorization Code:</strong><br>
+                <div id="auth-code" style="margin-top: 10px; font-size: 16px; color: #007bff;"></div>
+            </div>
+            
+            <button class="copy-btn" onclick="copyCode()">📋 Copy Code</button>
+            <button class="copy-btn" onclick="openApp()" style="background: #28a745;">📱 Open CmdSharp</button>
+            
+            <div id="copy-status" style="margin-top: 10px; font-weight: bold; color: #28a745; opacity: 0;">
+                ✅ Code copied to clipboard!
+            </div>
+        </div>
 
-              // Fallback message if redirect doesn't work
-              setTimeout(() => {
-                  document.body.innerHTML = `
-                      <h2>✅ Authorization Successful!</h2>
-                      <p>Please return to the CmdSharp app to complete setup.</p>
-                      <p><small>If the app didn't open automatically, please manually switch back to CmdSharp.</small></p>
-                  `;
-              }, 2000);
-          } else {
-              document.body.innerHTML = '<h2>❌ Invalid callback - missing authorization code</h2>';
-          }
-      </script>
-  </body>
-  </html>
+        <div id="error" style="display:none;">
+            <h2 class="error">❌ Authorization Failed</h2>
+            <p id="error-message"></p>
+            <p>Please return to CmdSharp and try again.</p>
+        </div>
+
+        <div class="footer">
+            <p>CmdSharp - Quick Invoice System</p>
+            <p>Secure OAuth 2.0 connection with Xero</p>
+        </div>
+    </div>
+
+    <script>
+        let authorizationCode = '';
+
+        function processCallback() {
+            // Get parameters from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
+            const state = urlParams.get('state');
+            const error = urlParams.get('error');
+            const errorDescription = urlParams.get('error_description');
+
+            // Hide loading
+            document.getElementById('loading').style.display = 'none';
+
+            if (error) {
+                // Show error
+                document.getElementById('error').style.display = 'block';
+                document.getElementById('error-message').textContent = 
+                    errorDescription || error || 'Unknown authorization error';
+            } else if (code) {
+                // Show success
+                authorizationCode = code;
+                document.getElementById('success').style.display = 'block';
+                document.getElementById('auth-code').textContent = code;
+
+                // Try to open app automatically
+                attemptAppRedirect(code, state);
+            } else {
+                // Show error for missing code
+                document.getElementById('error').style.display = 'block';
+                document.getElementById('error-message').textContent = 
+                    'Authorization code not found in callback URL';
+            }
+        }
+
+        function attemptAppRedirect(code, state) {
+            // Try to redirect to app (may not work on all platforms)
+            const appUrl = `cmdsharp://xero-callback?code=${encodeURIComponent(code)}&state=${encodeURIComponent(state || '')}`;
+            
+            // Create a hidden link and try to open it
+            const link = document.createElement('a');
+            link.href = appUrl;
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            
+            try {
+                link.click();
+            } catch (e) {
+                console.log('App redirect failed:', e);
+            }
+            
+            // Clean up
+            setTimeout(() => {
+                document.body.removeChild(link);
+            }, 1000);
+        }
+
+        function copyCode() {
+            if (!authorizationCode) return;
+
+            // Try modern clipboard API first
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(authorizationCode).then(() => {
+                    showCopySuccess();
+                }).catch(() => {
+                    // Fallback to legacy method
+                    legacyCopy();
+                });
+            } else {
+                // Fallback for older browsers
+                legacyCopy();
+            }
+        }
+
+        function legacyCopy() {
+            // Create temporary textarea
+            const textarea = document.createElement('textarea');
+            textarea.value = authorizationCode;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            
+            // Select and copy
+            textarea.select();
+            textarea.setSelectionRange(0, 99999); // For mobile
+            
+            try {
+                document.execCommand('copy');
+                showCopySuccess();
+            } catch (e) {
+                console.error('Copy failed:', e);
+            }
+            
+            // Clean up
+            document.body.removeChild(textarea);
+        }
+
+        function showCopySuccess() {
+            const status = document.getElementById('copy-status');
+            status.style.opacity = '1';
+            setTimeout(() => {
+                status.style.opacity = '0';
+            }, 2000);
+        }
+
+        function openApp() {
+            // Try to open the app
+            const appUrl = 'cmdsharp://';
+            window.location.href = appUrl;
+        }
+
+        // Process the callback when page loads
+        document.addEventListener('DOMContentLoaded', processCallback);
+    </script>
+</body>
+</html>
