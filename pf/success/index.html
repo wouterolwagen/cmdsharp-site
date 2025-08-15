@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful - Redirecting...</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .fallback {
+            margin-top: 2rem;
+            opacity: 0;
+            animation: fadeIn 3s ease-in forwards;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            margin-top: 1rem;
+            transition: transform 0.2s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="spinner" id="spinner"></div>
+        <h1>Payment Successful!</h1>
+        <p id="main-message">Redirecting you back to the Quick Invoice app...</p>
+        
+        <div class="fallback" id="fallback" style="opacity: 0;">
+            <p>If the app doesn't open automatically:</p>
+            <a href="#" id="manualLink" class="btn">Open Quick Invoice App</a>
+        </div>
+        
+        <!-- Success message for non-app users -->
+        <div id="success-message" style="display: none; margin-top: 2rem;">
+            <h2>✅ Payment Complete!</h2>
+            <p>Your payment has been processed successfully.</p>
+            <p>The business has been notified and your invoice has been marked as paid.</p>
+            <p style="font-size: 0.9em; opacity: 0.8; margin-top: 1.5rem;">
+                Invoice ID: <span id="invoice-display"></span><br>
+                Payment ID: <span id="payment-display"></span>
+            </p>
+            <div style="margin-top: 2rem; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                <p style="font-size: 0.9em; margin: 0;">
+                    <strong>📱 Want easier invoice management?</strong><br>
+                    Download the Quick Invoice app for instant notifications and payment tracking.
+                </p>
+                <a href="https://play.google.com/store/apps/details?id=com.proviska.cmdsharp" 
+                   target="_blank" class="btn" style="margin-top: 0.5rem;">
+                    Download for Android
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function redirectToApp() {
+            try {
+                // Get PayFast parameters from URL
+                const params = new URLSearchParams(window.location.search);
+                
+                // Extract key PayFast parameters
+                const paymentId = params.get('m_payment_id') || params.get('pf_payment_id') || 'unknown';
+                const invoiceId = params.get('custom_str1') || 'unknown';
+                const paymentStatus = params.get('payment_status') || 'COMPLETE';
+                const amount = params.get('amount_gross') || params.get('amount_fee') || '0';
+                
+                // Construct deep link URL
+                const deepLink = `cmdsharp://payfast/return?` + 
+                    `payment_id=${encodeURIComponent(paymentId)}&` +
+                    `invoice_id=${encodeURIComponent(invoiceId)}&` +
+                    `status=success&` +
+                    `payment_status=${encodeURIComponent(paymentStatus)}&` +
+                    `amount=${encodeURIComponent(amount)}&` +
+                    `timestamp=${Date.now()}`;
+                
+                console.log('PayFast Success - Redirecting to:', deepLink);
+                console.log('PayFast Parameters:', Object.fromEntries(params));
+                
+                // Update manual link
+                document.getElementById('manualLink').href = deepLink;
+                
+                // Attempt automatic redirect
+                window.location.href = deepLink;
+                
+                // Fallback: Try again after 2 seconds
+                setTimeout(() => {
+                    window.location.href = deepLink;
+                }, 2000);
+                
+            } catch (error) {
+                console.error('Error processing PayFast success redirect:', error);
+                
+                // Basic fallback
+                const basicLink = `cmdsharp://payfast/return?status=success&error=redirect_failed&timestamp=${Date.now()}`;
+                window.location.href = basicLink;
+            }
+        }
+        
+        // Start redirect immediately
+        redirectToApp();
+        
+        // After 4 seconds, assume user doesn't have the app and show success message
+        setTimeout(() => {
+            // Hide spinner and app-specific elements
+            document.getElementById('spinner').style.display = 'none';
+            document.getElementById('main-message').textContent = 'Thank you for your payment!';
+            document.getElementById('fallback').style.display = 'none';
+            
+            // Show success message for non-app users
+            const successDiv = document.getElementById('success-message');
+            successDiv.style.display = 'block';
+            
+            // Populate payment details
+            const params = new URLSearchParams(window.location.search);
+            const paymentId = params.get('m_payment_id') || params.get('pf_payment_id') || 'N/A';
+            const invoiceId = params.get('custom_str1') || 'N/A';
+            
+            document.getElementById('invoice-display').textContent = invoiceId;
+            document.getElementById('payment-display').textContent = paymentId;
+            
+        }, 4000);
+        
+        // Show manual fallback after 3 seconds (in case app exists but deep link failed)
+        setTimeout(() => {
+            const fallback = document.querySelector('.fallback');
+            if (fallback) {
+                fallback.style.opacity = '1';
+            }
+        }, 3000);
+    </script>
+</body>
+</html>
