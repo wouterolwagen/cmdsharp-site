@@ -100,8 +100,15 @@
                 
                 // Extract key PayFast parameters
                 const paymentId = params.get('m_payment_id') || params.get('pf_payment_id') || 'cancelled';
-                const invoiceId = params.get('custom_str1') || 'unknown';
+                const invoiceId = params.get('invoice_id') || params.get('custom_str1') || params.get('custom_1') || 'unknown';
                 const paymentStatus = params.get('payment_status') || 'CANCELLED';
+                
+                // Debug logging
+                console.log('PayFast Cancel Parameters:');
+                console.log('- All params:', Object.fromEntries(params));
+                console.log('- Payment ID:', paymentId);
+                console.log('- Invoice ID:', invoiceId);
+                console.log('- Payment Status:', paymentStatus);
                 
                 // Construct deep link URL
                 const deepLink = `cmdsharp://payfast/cancel?` + 
