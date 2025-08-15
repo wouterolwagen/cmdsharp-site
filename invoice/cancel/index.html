@@ -167,68 +167,96 @@
         }
         
         function attemptAppRedirect(deepLink) {
+            // Create invisible iframe to attempt app redirect without xdg-open
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = deepLink;
+            
             // Track if we successfully redirected to app
             let appOpened = false;
+            let fallbackTimer;
             
             // Listen for visibility change to detect if app opened
             const handleVisibilityChange = () => {
                 if (document.hidden) {
                     appOpened = true;
+                    clearTimeout(fallbackTimer);
+                    cleanup();
                 }
             };
             
             // Listen for blur event (app taking focus)
             const handleBlur = () => {
                 appOpened = true;
+                clearTimeout(fallbackTimer);
+                cleanup();
+            };
+            
+            const cleanup = () => {
+                document.removeEventListener('visibilitychange', handleVisibilityChange);
+                window.removeEventListener('blur', handleBlur);
+                if (iframe.parentNode) {
+                    iframe.parentNode.removeChild(iframe);
+                }
             };
             
             document.addEventListener('visibilitychange', handleVisibilityChange);
             window.addEventListener('blur', handleBlur);
             
-            // Try to open the app
-            try {
-                window.location.href = deepLink;
-            } catch (e) {
-                // Silent fail
-            }
+            // Add iframe to try app redirect
+            document.body.appendChild(iframe);
             
-            // Check after 2 seconds if app opened
-            setTimeout(() => {
-                document.removeEventListener('visibilitychange', handleVisibilityChange);
-                window.removeEventListener('blur', handleBlur);
-                
+            // Fallback: Show web experience after 1.5 seconds if app didn't open
+            fallbackTimer = setTimeout(() => {
                 if (!appOpened) {
+                    cleanup();
                     showWebUserExperience();
                 }
-            }, 2000);
-            
-            // Fallback: Try again after 3 seconds (in case first attempt failed)
-            setTimeout(() => {
-                if (!appOpened) {
-                    try {
-                        window.location.href = deepLink;
-                    } catch (e) {
-                        // Silent fail
-                    }
-                }
-            }, 3000);
+            }, 1500);
         }
         
         function showWebUserExperience() {
+            // Validate we have valid cancel parameters
+            const params = new URLSearchParams(window.location.search);
+            const provider = detectPaymentProvider(params);
+            
+            let hasValidCancel = false;
+            if (provider === 'stripe') {
+                // Stripe cancellation - check for session or payment intent
+                hasValidCancel = params.has('payment_intent') || params.has('session_id');
+            } else {
+                // PayFast cancellation - less strict validation for cancels
+                hasValidCancel = params.has('invoice_id') || params.has('custom_str1') || 
+                               params.has('m_payment_id') || params.has('pf_payment_id');
+            }
+            
             // Hide spinner and app-specific elements
             document.getElementById('spinner').style.display = 'none';
-            document.getElementById('main-message').textContent = 'Payment was cancelled.';
             document.getElementById('fallback').style.display = 'none';
             
-            // Show cancel message for non-app users
-            const cancelDiv = document.getElementById('cancel-message');
-            cancelDiv.style.display = 'block';
-            
-            // Populate invoice details from either provider
-            const params = new URLSearchParams(window.location.search);
-            const invoiceId = params.get('invoice_id') || params.get('custom_str1') || 'N/A';
-            
-            document.getElementById('invoice-display').textContent = invoiceId;
+            if (hasValidCancel) {
+                // Show normal cancel message
+                document.getElementById('main-message').textContent = 'Payment was cancelled.';
+                const cancelDiv = document.getElementById('cancel-message');
+                cancelDiv.style.display = 'block';
+                
+                // Populate invoice details from either provider
+                const invoiceId = params.get('invoice_id') || params.get('custom_str1') || 'N/A';
+                document.getElementById('invoice-display').textContent = invoiceId;
+            } else {
+                // Show error for suspicious cancel attempts
+                document.getElementById('main-message').textContent = 'Invalid cancellation request';
+                const cancelDiv = document.getElementById('cancel-message');
+                cancelDiv.innerHTML = `
+                    <h2>⚠️ Invalid Request</h2>
+                    <p>This cancellation request doesn't contain valid payment information.</p>
+                    <p>If you're trying to cancel a payment, please use the link from your original invoice.</p>
+                    <p style="font-size: 0.8em; opacity: 0.7; margin-top: 1.5rem;">
+                        Error: Missing required cancellation parameters
+                    </p>
+                `;
+                cancelDiv.style.display = 'block';
+            }
         }
         
         // Start redirect immediately

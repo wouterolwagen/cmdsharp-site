@@ -160,62 +160,93 @@
         }
         
         function attemptAppRedirect(deepLink) {
+            // Create invisible iframe to attempt app redirect without xdg-open
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = deepLink;
+            
             // Track if we successfully redirected to app
             let appOpened = false;
+            let fallbackTimer;
             
             // Listen for visibility change to detect if app opened
             const handleVisibilityChange = () => {
                 if (document.hidden) {
                     appOpened = true;
+                    clearTimeout(fallbackTimer);
+                    cleanup();
                 }
             };
             
             // Listen for blur event (app taking focus)
             const handleBlur = () => {
                 appOpened = true;
+                clearTimeout(fallbackTimer);
+                cleanup();
+            };
+            
+            const cleanup = () => {
+                document.removeEventListener('visibilitychange', handleVisibilityChange);
+                window.removeEventListener('blur', handleBlur);
+                if (iframe.parentNode) {
+                    iframe.parentNode.removeChild(iframe);
+                }
             };
             
             document.addEventListener('visibilitychange', handleVisibilityChange);
             window.addEventListener('blur', handleBlur);
             
-            // Try to open the app
-            try {
-                window.location.href = deepLink;
-            } catch (e) {
-                // Silent fail
-            }
+            // Add iframe to try app redirect
+            document.body.appendChild(iframe);
             
-            // Check after 2 seconds if app opened
-            setTimeout(() => {
-                document.removeEventListener('visibilitychange', handleVisibilityChange);
-                window.removeEventListener('blur', handleBlur);
-                
+            // Fallback: Show web experience after 1.5 seconds if app didn't open
+            fallbackTimer = setTimeout(() => {
                 if (!appOpened) {
+                    cleanup();
                     showWebUserExperience();
                 }
-            }, 2000);
-            
-            // Fallback: Try again after 3 seconds (in case first attempt failed)
-            setTimeout(() => {
-                if (!appOpened) {
-                    try {
-                        window.location.href = deepLink;
-                    } catch (e) {
-                        // Silent fail
-                    }
-                }
-            }, 3000);
+            }, 1500);
         }
         
         function showWebUserExperience() {
+            // Validate we have required payment parameters before showing success
+            const params = new URLSearchParams(window.location.search);
+            const provider = detectPaymentProvider(params);
+            
+            let hasValidPayment = false;
+            if (provider === 'stripe') {
+                // Stripe requires payment_intent parameter
+                hasValidPayment = params.has('payment_intent') && params.get('payment_intent') !== 'unknown';
+            } else {
+                // PayFast requires payment_id or amount parameter  
+                hasValidPayment = (params.has('m_payment_id') || params.has('pf_payment_id') || 
+                                 params.has('amount_gross') || params.has('amount_fee')) &&
+                                 (params.get('m_payment_id') !== 'unknown' && params.get('pf_payment_id') !== 'unknown');
+            }
+            
             // Hide spinner and app-specific elements
             document.getElementById('spinner').style.display = 'none';
-            document.getElementById('main-message').textContent = 'Thank you for your payment!';
             document.getElementById('fallback').style.display = 'none';
             
-            // Show success message for non-app users
-            const successDiv = document.getElementById('success-message');
-            successDiv.style.display = 'block';
+            if (hasValidPayment) {
+                // Show success message for valid payments
+                document.getElementById('main-message').textContent = 'Thank you for your payment!';
+                const successDiv = document.getElementById('success-message');
+                successDiv.style.display = 'block';
+            } else {
+                // Show error message for invalid/missing payment data
+                document.getElementById('main-message').textContent = 'Payment verification failed';
+                const successDiv = document.getElementById('success-message');
+                successDiv.innerHTML = `
+                    <h2>⚠️ Payment Verification Issue</h2>
+                    <p>We couldn't verify your payment details from the payment provider.</p>
+                    <p>If you completed a payment, please contact support with your transaction details.</p>
+                    <p style="font-size: 0.8em; opacity: 0.7; margin-top: 1.5rem;">
+                        Error: Missing required payment parameters
+                    </p>
+                `;
+                successDiv.style.display = 'block';
+            }
         }
         
         // Start redirect immediately
