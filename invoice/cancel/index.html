@@ -93,60 +93,128 @@
     </div>
 
     <script>
+        function detectPaymentProvider(params) {
+            // Stripe parameters
+            if (params.has('payment_intent') || params.has('session_id') || params.has('redirect_status')) {
+                return 'stripe';
+            }
+            
+            // PayFast parameters
+            if (params.has('m_payment_id') || params.has('pf_payment_id') || params.has('payment_status')) {
+                return 'payfast';
+            }
+            
+            // Default to PayFast if unclear (backward compatibility)
+            return 'payfast';
+        }
+        
+        function handleStripeCancel(params) {
+            const paymentIntent = params.get('payment_intent') || 'cancelled';
+            const sessionId = params.get('session_id') || '';
+            const invoiceId = params.get('invoice_id') || 'unknown';
+            
+            const deepLink = `cmdsharp://stripe/cancel?` + 
+                `payment_intent=${encodeURIComponent(paymentIntent)}&` +
+                `invoice_id=${encodeURIComponent(invoiceId)}&` +
+                `status=cancelled&` +
+                `reason=user_cancelled&` +
+                `session_id=${encodeURIComponent(sessionId)}&` +
+                `timestamp=${Date.now()}`;
+            return deepLink;
+        }
+        
+        function handlePayFastCancel(params) {
+            const paymentId = params.get('m_payment_id') || params.get('pf_payment_id') || 'cancelled';
+            const invoiceId = params.get('invoice_id') || params.get('custom_str1') || params.get('custom_1') || 'unknown';
+            const paymentStatus = params.get('payment_status') || 'CANCELLED';
+            
+            const deepLink = `cmdsharp://payfast/cancel?` + 
+                `payment_id=${encodeURIComponent(paymentId)}&` +
+                `invoice_id=${encodeURIComponent(invoiceId)}&` +
+                `status=cancelled&` +
+                `payment_status=${encodeURIComponent(paymentStatus)}&` +
+                `reason=user_cancelled&` +
+                `timestamp=${Date.now()}`;
+            return deepLink;
+        }
+        
         function redirectToApp() {
             try {
-                // Get PayFast parameters from URL
                 const params = new URLSearchParams(window.location.search);
                 
-                // Extract key PayFast parameters
-                const paymentId = params.get('m_payment_id') || params.get('pf_payment_id') || 'cancelled';
-                const invoiceId = params.get('invoice_id') || params.get('custom_str1') || params.get('custom_1') || 'unknown';
-                const paymentStatus = params.get('payment_status') || 'CANCELLED';
+                // Detect payment provider
+                const provider = detectPaymentProvider(params);
                 
-                // Debug logging
-                console.log('PayFast Cancel Parameters:');
-                console.log('- All params:', Object.fromEntries(params));
-                console.log('- Payment ID:', paymentId);
-                console.log('- Invoice ID:', invoiceId);
-                console.log('- Payment Status:', paymentStatus);
-                
-                // Construct deep link URL
-                const deepLink = `cmdsharp://payfast/cancel?` + 
-                    `payment_id=${encodeURIComponent(paymentId)}&` +
-                    `invoice_id=${encodeURIComponent(invoiceId)}&` +
-                    `status=cancelled&` +
-                    `payment_status=${encodeURIComponent(paymentStatus)}&` +
-                    `reason=user_cancelled&` +
-                    `timestamp=${Date.now()}`;
-                
-                console.log('PayFast Cancel - Redirecting to:', deepLink);
-                console.log('PayFast Parameters:', Object.fromEntries(params));
+                // Generate appropriate deep link
+                let deepLink;
+                if (provider === 'stripe') {
+                    deepLink = handleStripeCancel(params);
+                } else {
+                    deepLink = handlePayFastCancel(params);
+                }
                 
                 // Update manual link
                 document.getElementById('manualLink').href = deepLink;
                 
-                // Attempt automatic redirect
-                window.location.href = deepLink;
-                
-                // Fallback: Try again after 2 seconds
-                setTimeout(() => {
-                    window.location.href = deepLink;
-                }, 2000);
+                // Attempt automatic redirect with better app detection
+                attemptAppRedirect(deepLink);
                 
             } catch (error) {
-                console.error('Error processing PayFast cancel redirect:', error);
-                
                 // Basic fallback
                 const basicLink = `cmdsharp://payfast/cancel?status=cancelled&error=redirect_failed&timestamp=${Date.now()}`;
-                window.location.href = basicLink;
+                attemptAppRedirect(basicLink);
             }
         }
         
-        // Start redirect immediately
-        redirectToApp();
+        function attemptAppRedirect(deepLink) {
+            // Track if we successfully redirected to app
+            let appOpened = false;
+            
+            // Listen for visibility change to detect if app opened
+            const handleVisibilityChange = () => {
+                if (document.hidden) {
+                    appOpened = true;
+                }
+            };
+            
+            // Listen for blur event (app taking focus)
+            const handleBlur = () => {
+                appOpened = true;
+            };
+            
+            document.addEventListener('visibilitychange', handleVisibilityChange);
+            window.addEventListener('blur', handleBlur);
+            
+            // Try to open the app
+            try {
+                window.location.href = deepLink;
+            } catch (e) {
+                // Silent fail
+            }
+            
+            // Check after 2 seconds if app opened
+            setTimeout(() => {
+                document.removeEventListener('visibilitychange', handleVisibilityChange);
+                window.removeEventListener('blur', handleBlur);
+                
+                if (!appOpened) {
+                    showWebUserExperience();
+                }
+            }, 2000);
+            
+            // Fallback: Try again after 3 seconds (in case first attempt failed)
+            setTimeout(() => {
+                if (!appOpened) {
+                    try {
+                        window.location.href = deepLink;
+                    } catch (e) {
+                        // Silent fail
+                    }
+                }
+            }, 3000);
+        }
         
-        // After 4 seconds, assume user doesn't have the app and show cancel message
-        setTimeout(() => {
+        function showWebUserExperience() {
             // Hide spinner and app-specific elements
             document.getElementById('spinner').style.display = 'none';
             document.getElementById('main-message').textContent = 'Payment was cancelled.';
@@ -156,21 +224,28 @@
             const cancelDiv = document.getElementById('cancel-message');
             cancelDiv.style.display = 'block';
             
-            // Populate invoice details
+            // Populate invoice details from either provider
             const params = new URLSearchParams(window.location.search);
-            const invoiceId = params.get('custom_str1') || 'N/A';
+            const invoiceId = params.get('invoice_id') || params.get('custom_str1') || 'N/A';
             
             document.getElementById('invoice-display').textContent = invoiceId;
-            
-        }, 4000);
+        }
         
-        // Show manual fallback after 3 seconds (in case app exists but deep link failed)
+        // Start redirect immediately
+        redirectToApp();
+        
+        // Fallback: After 5 seconds, assume user doesn't have the app
+        setTimeout(() => {
+            showWebUserExperience();
+        }, 5000);
+        
+        // Show manual fallback after 4 seconds (in case app exists but deep link failed)
         setTimeout(() => {
             const fallback = document.querySelector('.fallback');
-            if (fallback) {
+            if (fallback && !document.getElementById('cancel-message').style.display) {
                 fallback.style.opacity = '1';
             }
-        }, 3000);
+        }, 4000);
     </script>
 </body>
 </html>
