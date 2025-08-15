@@ -77,20 +77,9 @@
             <h2>✅ Payment Complete!</h2>
             <p>Your payment has been processed successfully.</p>
             <p>The business has been notified and your invoice has been marked as paid.</p>
-            <p style="font-size: 0.9em; opacity: 0.8; margin-top: 1.5rem;">
-                Invoice ID: <span id="invoice-display"></span><br>
-                Payment ID: <span id="payment-display"></span>
+            <p style="font-size: 0.8em; opacity: 0.7; margin-top: 1.5rem;">
+                You can safely close this window.
             </p>
-            <div style="margin-top: 2rem; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 8px;">
-                <p style="font-size: 0.9em; margin: 0;">
-                    <strong>📱 Want easier invoice management?</strong><br>
-                    Download the Quick Invoice app for instant notifications and payment tracking.
-                </p>
-                <a href="https://play.google.com/store/apps/details?id=com.proviska.cmdsharp" 
-                   target="_blank" class="btn" style="margin-top: 0.5rem;">
-                    Download for Android
-                </a>
-            </div>
         </div>
     </div>
 
@@ -159,14 +148,6 @@
             // Show success message for non-app users
             const successDiv = document.getElementById('success-message');
             successDiv.style.display = 'block';
-            
-            // Populate payment details
-            const params = new URLSearchParams(window.location.search);
-            const paymentId = params.get('m_payment_id') || params.get('pf_payment_id') || 'N/A';
-            const invoiceId = params.get('custom_str1') || 'N/A';
-            
-            document.getElementById('invoice-display').textContent = invoiceId;
-            document.getElementById('payment-display').textContent = paymentId;
             
         }, 4000);
         
