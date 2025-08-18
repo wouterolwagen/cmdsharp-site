@@ -6,6 +6,11 @@
     <changefreq>daily</changefreq>
   </url>
   <url>
+    <loc>https://cmdsharp.com/download.html</loc>
+    <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
     <loc>https://cmdsharp.com/privacy.html</loc>
     <priority>0.3</priority>
     <changefreq>yearly</changefreq>
