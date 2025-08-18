@@ -597,8 +597,8 @@
             btn.innerHTML = '⏳ Preparing Download...';
             btn.disabled = true;
             
-            // Direct download - update this URL to your actual APK location
-            window.location.href = 'https://cmdsharp.com/downloads/cmdsharp-trial.apk';
+            // Download from API endpoint
+            window.location.href = 'https://ai.proviska.com/api/demo-download.php?source=landing';
             
             setTimeout(() => {
                 btn.innerHTML = '🔄 Download Again';
