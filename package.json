@@ -1,0 +1,13 @@
+{
+  "name": "cmdsharp-site",
+  "version": "1.0.0",
+  "description": "CmdSharp marketing website",
+  "private": true,
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  },
+  "devDependencies": {},
+  "scripts": {},
+  "author": "Proviska",
+  "license": "UNLICENSED"
+}
