@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Preconnect to external domains for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://ai.proviska.com">
+    
+    <title>Download CmdSharp - Start Your Free 7-Day Trial</title>
+    <meta name="description" content="Download CmdSharp and start your free 7-day trial. Create professional invoices in seconds with AI-powered voice commands.">
+    <link rel="icon" href="images/favicon.ico" />
+    <meta name="theme-color" content="#1a1a2e" />
+    
+    <!-- SEO Meta Tags -->
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Proviska">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Download CmdSharp - Free 7-Day Trial">
+    <meta property="og:description" content="Start your free trial of CmdSharp. Professional AI-powered invoicing in seconds.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cmdsharp.com/download.html">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark: #1a1a2e;
+            --primary-purple: #16213e;
+            --accent-cyan: #0f3460;
+            --neon-green: #00ff88;
+            --neon-blue: #00d4ff;
+            --neon-purple: #8b5cf6;
+            --text-light: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--primary-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Glass morphism utility */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+        }
+
+        /* Animated background */
+        .bg-animated {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-purple) 50%, var(--accent-cyan) 100%);
+            animation: gradientShift 8s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-purple) 50%, var(--accent-cyan) 100%); }
+            50% { background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--primary-purple) 50%, var(--primary-dark) 100%); }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--neon-green);
+            text-decoration: none;
+        }
+
+        .logo img {
+            filter: brightness(0) invert(1);
+            transition: filter 0.3s ease;
+        }
+
+        .logo:hover img {
+            filter: brightness(0) invert(1) drop-shadow(0 0 5px var(--neon-green));
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--neon-green);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-green);
+        }
+
+        /* Download Section */
+        .download-section {
+            min-height: 100vh;
+            padding: 8rem 2rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .download-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+            margin-top: 2rem;
+        }
+
+        .download-content {
+            position: sticky;
+            top: 8rem;
+        }
+
+        .section-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .download-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .download-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .download-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
+            color: var(--primary-dark);
+            width: 100%;
+            text-align: center;
+            padding: 1.2rem 2rem;
+            font-size: 1.1rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-light);
+            border: 2px solid var(--glass-border);
+            width: 100%;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--neon-green);
+            color: var(--neon-green);
+            transform: translateY(-2px);
+        }
+
+        /* Steps */
+        .steps-container {
+            margin-top: 2rem;
+        }
+
+        .step {
+            display: flex;
+            align-items: start;
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .step:hover {
+            border-color: var(--neon-green);
+            transform: translateX(5px);
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .step-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Features List */
+        .features-list {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .features-list li {
+            padding: 0.75rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .features-list li::before {
+            content: '✓';
+            color: var(--neon-green);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .warning-box {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .warning-box strong {
+            color: #ffd700;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: var(--text-light);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            display: none;
+            backdrop-filter: blur(10px);
+        }
+
+        .ios-message {
+            background: rgba(13, 202, 240, 0.1);
+            border: 1px solid rgba(13, 202, 240, 0.3);
+            color: var(--text-light);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .ios-message h3 {
+            color: var(--neon-blue);
+            margin-bottom: 0.75rem;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 6rem;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--glass-border);
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--neon-green);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            nav {
+                flex-wrap: wrap;
+                padding: 0 1rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+
+            .download-section {
+                padding: 6rem 1rem 2rem;
+            }
+
+            .download-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .download-content {
+                position: static;
+            }
+
+            .download-card {
+                padding: 1.5rem;
+            }
+
+            .step {
+                padding: 1rem;
+            }
+
+            footer {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animated"></div>
+
+    <header>
+        <nav>
+            <div class="nav-left">
+                <a href="index.html" class="logo">
+                    <img src="images/logo-transparent.png" height="40" alt="CmdSharp">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#pricing">Pricing</a></li>
+                <li><a href="index.html#how-it-works">How It Works</a></li>
+                <li>
+                    <a href="download.html" class="btn btn-primary" style="color: var(--primary-dark); padding: 0.6rem 1.2rem; font-size: 0.9rem;">
+                        Try Free
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="download-section">
+        <div class="download-container">
+            <div class="download-content">
+                <h1 class="download-title">Ready to Transform Your Invoicing?</h1>
+                <p class="download-subtitle">Join thousands of businesses saving 90% of their invoicing time</p>
+                
+                <div class="download-card">
+                    <h3 style="color: var(--text-light); margin-bottom: 1.5rem; font-size: 1.3rem;">
+                        🎯 Your 7-Day Free Trial Includes:
+                    </h3>
+                    <ul class="features-list">
+                        <li>Full access to all premium features</li>
+                        <li>Create unlimited invoices</li>
+                        <li>AI-powered voice commands</li>
+                        <li>Professional PDF templates</li>
+                        <li>Customer management system</li>
+                        <li>No credit card required</li>
+                        <li>No automatic charges</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚡ Safe secure download</strong>
+                    Safe secure download. SSL encryption. 
+                </div>
+            </div>
+
+            <div class="steps-side">
+                <div id="error-message" class="error-message"></div>
+                
+                <div id="android-content">
+                    <div class="download-card">
+                        <button onclick="downloadApp()" class="btn btn-primary" id="download-btn">
+                            📱 Download CmdSharp Now
+                        </button>
+                        <a href="index.html#how-it-works" class="btn btn-secondary">
+                            Watch Demo First →
+                        </a>
+                    </div>
+
+                    <div class="steps-container">
+                        <h3 style="color: var(--text-light); margin-bottom: 1.5rem; font-size: 1.2rem;">
+                            Quick Installation Guide:
+                        </h3>
+                        
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Download the App</h3>
+                                <p>Click the button above to download CmdSharp APK</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>Open Your Downloads</h3>
+                                <p>Swipe down from the top of your screen and tap the notification</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Install & Allow</h3>
+                                <p>Tap install. If prompted, enable "Allow from this source" (safe)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3>Start Creating!</h3>
+                                <p>Open CmdSharp and start your 7-day free trial instantly</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="warning-box">
+                        <strong>Need Help?</strong>
+                        If you see a security warning, it's normal for apps outside Play Store. Just tap "Settings" and enable "Allow from this source" - CmdSharp is 100% safe and this only needs to be done once.
+                    </div>
+                </div>
+                
+                <div id="ios-content" style="display: none;">
+                    <div class="ios-message">
+                        <h3>iOS Version Coming Soon!</h3>
+                        <p>CmdSharp for iOS is currently in development. The trial is only available for Android devices at this time.</p>
+                        <p style="margin-top: 1rem;">Join our waitlist to be notified when iOS version launches!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="terms.html">Terms</a>
+            <a href="privacy.html">Privacy</a>
+            <a href="index.html#pricing">Pricing</a>
+        </div>
+        <p>&copy; 2024 CmdSharp by Proviska. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Device detection
+        function detectDevice() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                document.getElementById('android-content').style.display = 'none';
+                document.getElementById('ios-content').style.display = 'block';
+                return 'ios';
+            }
+            
+            return /android/i.test(userAgent) ? 'android' : 'desktop';
+        }
+
+        // Download function
+        function downloadApp() {
+            const btn = document.getElementById('download-btn');
+            const originalText = btn.textContent;
+            btn.innerHTML = '⏳ Preparing Download...';
+            btn.disabled = true;
+            
+            // Direct download - update this URL to your actual APK location
+            window.location.href = 'https://cmdsharp.com/downloads/cmdsharp-trial.apk';
+            
+            setTimeout(() => {
+                btn.innerHTML = '🔄 Download Again';
+                btn.disabled = false;
+                
+                const warningBox = document.querySelector('.warning-box');
+                warningBox.innerHTML = '<strong>🎉 Download Started!</strong> Check your Downloads folder or notification bar. If the download didn\'t start, click "Download Again" above.';
+                warningBox.style.background = 'rgba(0, 255, 136, 0.1)';
+                warningBox.style.borderColor = 'rgba(0, 255, 136, 0.3)';
+            }, 3000);
+        }
+
+        // Initialize on load
+        window.addEventListener('load', detectDevice);
+    </script>
+</body>
+</html>
