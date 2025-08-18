@@ -1,0 +1,6 @@
+[build]
+  publish = "."
+
+# Explicitly state no functions directory
+[functions]
+  directory = ""
