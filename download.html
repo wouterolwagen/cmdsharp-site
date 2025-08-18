@@ -400,6 +400,18 @@
             color: var(--neon-green);
         }
 
+        /* News Banner - Full Width Compact */
+        .news-banner:hover {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 212, 255, 0.05));
+            border-bottom-color: var(--neon-green);
+        }
+
+        .news-banner a:hover span:last-child {
+            background: var(--neon-blue);
+            color: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             nav {
@@ -413,6 +425,18 @@
 
             .download-section {
                 padding: 6rem 1rem 2rem;
+            }
+
+            /* News banner mobile */
+            .news-banner {
+                padding: 0.75rem 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .news-banner div[style*="display: flex"] {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
             }
 
             .download-container {
@@ -470,6 +494,19 @@
     </header>
 
     <section class="download-section">
+        <!-- In the News Banner - Full Width -->
+        <div class="news-banner" style="background: linear-gradient(135deg, var(--glass-bg), rgba(0, 255, 136, 0.05)); backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border); padding: 1rem 2rem; margin-bottom: 2rem; transition: all 0.3s ease;">
+            <a href="https://theopenletter.io/p/getting-smes-paid-on-time" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit; display: block;">
+                <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; text-align: center;">
+                    <span style="color: var(--neon-green); font-size: 0.9rem; font-weight: 600;">📰 IN THE NEWS:</span>
+                    <span style="color: var(--text-light); font-weight: 600; font-size: 1rem;">"Get Paid in Your Bakkie" - The Open Letter Feature</span>
+                    <span style="color: var(--neon-blue); font-size: 0.9rem; font-weight: 500; padding: 0.3rem 0.8rem; border: 1px solid var(--neon-blue); border-radius: 15px; transition: all 0.3s ease;">
+                        Read Article →
+                    </span>
+                </div>
+            </a>
+        </div>
+
         <div class="download-container">
             <div class="download-content">
                 <h1 class="download-title">Ready to Transform Your Invoicing?</h1>
