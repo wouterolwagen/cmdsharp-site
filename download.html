@@ -15,6 +15,9 @@
     <link rel="icon" href="images/favicon.ico" />
     <meta name="theme-color" content="#1a1a2e" />
     
+    <!-- QR Code Library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    
     <!-- SEO Meta Tags -->
     <meta name="robots" content="index, follow">
     <meta name="author" content="Proviska">
@@ -540,9 +543,25 @@
                         <button onclick="downloadApp()" class="btn btn-primary" id="download-btn">
                             📱 Download CmdSharp Now
                         </button>
-                        <!-- <a href="index.html#how-it-works" class="btn btn-secondary">
-                            Watch Demo First →
-                        </a> -->
+                        <button onclick="showQRCode()" class="btn btn-secondary" id="qr-btn" style="margin-top: 1rem;">
+                            📲 Get QR Code for Phone
+                        </button>
+                    </div>
+                    
+                    <!-- QR Code Modal -->
+                    <div id="qr-modal" style="display: none; opacity: 0; transition: opacity 0.3s ease; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 10000; backdrop-filter: blur(10px);">
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: linear-gradient(135deg, var(--glass-bg), rgba(0, 255, 136, 0.05)); border: 1px solid var(--glass-border); border-radius: 30px; padding: 2rem; text-align: center; max-width: 400px;">
+                            <span onclick="closeQRCode()" style="position: absolute; top: 10px; right: 15px; font-size: 30px; cursor: pointer; color: var(--text-light);">&times;</span>
+                            <h2 style="color: var(--neon-green); margin-bottom: 1rem;">📲 Scan with Your Phone</h2>
+                            <div id="qr-code-container" style="background: white; padding: 20px; border-radius: 20px; margin: 20px 0; display: inline-block;">
+                                <!-- QR Code will be generated here -->
+                            </div>
+                            <p style="color: var(--text-muted); margin-top: 1rem;">Scan this QR code with your phone's camera to download CmdSharp</p>
+                            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--glass-border);">
+                                <p style="color: var(--text-muted); font-size: 0.9rem;">Or manually visit:</p>
+                                <code style="background: var(--primary-dark); color: var(--neon-green); padding: 0.5rem 1rem; border-radius: 10px; font-size: 0.8rem; word-break: break-all; display: block; margin-top: 0.5rem;">https://cmdsharp.com/d</code>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="steps-container">
@@ -625,6 +644,7 @@
         // Device detection
         function detectDevice() {
             const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            const qrButton = document.getElementById('qr-btn');
             
             if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
                 document.getElementById('android-content').style.display = 'none';
@@ -632,7 +652,14 @@
                 return 'ios';
             }
             
-            return /android/i.test(userAgent) ? 'android' : 'desktop';
+            const deviceType = /android/i.test(userAgent) ? 'android' : 'desktop';
+            
+            // Hide QR button on mobile devices (they don't need it)
+            if (deviceType === 'android' && qrButton) {
+                qrButton.style.display = 'none';
+            }
+            
+            return deviceType;
         }
 
         // Download function
@@ -655,6 +682,58 @@
                 warningBox.style.borderColor = 'rgba(0, 255, 136, 0.3)';
             }, 3000);
         }
+
+        // QR Code functionality
+        let qrCodeInstance = null;
+        
+        function showQRCode() {
+            const modal = document.getElementById('qr-modal');
+            const container = document.getElementById('qr-code-container');
+            
+            // Clear any existing QR code
+            container.innerHTML = '';
+            
+            // Generate new QR code
+            const downloadUrl = 'https://ai.proviska.com/api/demo-download.php?source=qr';
+            
+            // Create QR code with professional styling
+            qrCodeInstance = new QRCode(container, {
+                text: downloadUrl,
+                width: 256,
+                height: 256,
+                colorDark: '#1a1a2e',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+            
+            // Show modal with fade-in effect
+            modal.style.display = 'block';
+            setTimeout(() => {
+                modal.style.opacity = '1';
+            }, 10);
+        }
+        
+        function closeQRCode() {
+            const modal = document.getElementById('qr-modal');
+            modal.style.opacity = '0';
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+        
+        // Close QR modal when clicking outside
+        document.getElementById('qr-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeQRCode();
+            }
+        });
+        
+        // Close with ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeQRCode();
+            }
+        });
 
         // Initialize on load
         window.addEventListener('load', detectDevice);
