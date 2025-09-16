@@ -1095,8 +1095,6 @@
       "softwareVersion": "2.0",
       "identifier": "com.proviska.cmdsharp",
       "url": "https://cmdsharp.com",
-      "downloadUrl": "https://cmdsharp.com/download.html",
-      "installUrl": "https://cmdsharp.com/download.html",
       "datePublished": "2024-01-01",
       "dateModified": "2025-01-10",
       "inLanguage": "en",
@@ -1128,13 +1126,6 @@
         "priceValidUntil": "2025-12-31",
         "url": "https://cmdsharp.com/#pricing",
         "description": "Lifetime license with all features included"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.8",
-        "ratingCount": "127",
-        "bestRating": "5",
-        "worstRating": "1"
       },
       "screenshot": [
         "https://cmdsharp.com/images/dashboard.webp",
@@ -1278,10 +1269,10 @@
         },
         {
           "@type": "Question",
-          "name": "Is CmdSharp a one-time purchase?",
+          "name": "When will CmdSharp be available?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes! CmdSharp offers a lifetime license for a one-time payment starting at $49 USD for international users and R499 for South African users (special launch price). This includes all features and future updates with no recurring fees."
+            "text": "CmdSharp is currently in final testing and is expected to launch on Google Play Store in September 2025. You can sign up to be notified when it becomes available."
           }
         },
         {
@@ -1343,14 +1334,14 @@
                 <li><a href="#gallery">Screenshots</a></li>
                 <li><a href="#pricing">Pricing</a></li>
                 <li>
-                    <a href="download.html" class="btn btn-primary" style="color: var(--primary-dark); padding: 0.6rem 1.2rem; font-size: 0.9rem;">
-                        Try Free
+                    <a href="#pricing" class="btn btn-primary" style="color: var(--primary-dark); padding: 0.6rem 1.2rem; font-size: 0.9rem;">
+                        Coming Soon
                     </a>
                 </li>
             </ul>
             <div class="demo-download-btn">
-                <a href="download.html" class="btn btn-primary">
-                    Try Free
+                <a href="#pricing" class="btn btn-primary">
+                    Coming Soon
                 </a>
             </div>
         </nav>
@@ -1387,7 +1378,7 @@
             </div>
 
             <div class="cta-buttons">
-                <a href="#pricing" class="btn btn-primary">Get Started Now</a>
+                <a href="#pricing" class="btn btn-primary">Get Notified</a>
                 <a href="#features" class="btn btn-secondary">See Features</a>
             </div>
             
@@ -1553,36 +1544,41 @@
 
     <section class="pricing" id="pricing">
         <div class="section-header fade-in">
-            <h2 class="section-title">AI Invoice Software Pricing - Special Launch Offer</h2>
-            <p class="section-subtitle">Get lifetime access to voice invoicing software at 87% off</p>
+            <h2 class="section-title">Coming Soon to Google Play Store</h2>
+            <p class="section-subtitle">Revolutionary voice invoicing is almost ready for public release</p>
         </div>
-        
+
         <div class="pricing-card fade-in">
-            <h3>CmdSharp Lifetime License</h3>
-            <div class="price-display" id="pricing-display">
-                <span id="price-amount">$49</span>
-                <span id="price-currency" style="font-size: 1.5rem;">USD</span>
-            </div>
-            <p class="price-note" id="price-note">One-time payment • Lifetime access • All features included</p>
-            <p id="price-context" style="color: var(--text-muted); margin-bottom: 1rem;">Regular price: $299/year</p>
-            <p style="color: var(--neon-green); font-weight: 600; margin-bottom: 2rem;">Save 87% + no recurring fees!</p>
-            
-            <ul class="features-list">
+            <h3>Get Notified When We Launch</h3>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">Be the first to know when CmdSharp becomes available on Google Play Store</p>
+
+            <form class="notify-form"
+                  style="margin-bottom: 2rem;"
+                  netlify
+                  name="email-signup">
+                <input type="email"
+                       name="email"
+                       placeholder="Enter your email address"
+                       required
+                       style="width: 100%; padding: 1rem; border-radius: 10px; border: 1px solid var(--glass-border); background: var(--glass-bg); color: var(--text-light); margin-bottom: 1rem; font-size: 1rem;">
+                <button type="submit"
+                        class="btn btn-primary"
+                        style="width: 100%;">
+                    Notify Me When Available
+                </button>
+            </form>
+
+            <ul class="features-list" style="margin-bottom: 2rem;">
                 <li>Lightning-fast shortcut system</li>
                 <li>Advanced voice recognition</li>
                 <li>Professional PDF generation</li>
                 <li>Business intelligence dashboard</li>
                 <li>Customer & service management</li>
-                <li>All future updates included</li>
+                <li>Available on Google Play Store</li>
             </ul>
-            
-            <button class="btn btn-primary" id="get-license-btn" onclick="initiatePurchase()" style="width: 100%; margin-top: 1rem;">
-                <span id="btn-text">Get Lifetime Access</span>
-                <span id="btn-loading" style="display: none;">🌍 Detecting location...</span>
-            </button>
-            
-            <p id="location-info" style="font-size: 0.9rem; margin-top: 1rem; color: var(--text-muted); display: none;">
-                <span id="location-text"></span>
+
+            <p class="launch-note" style="color: var(--text-muted); font-size: 0.9rem;">
+                Expected launch: September 2025
             </p>
         </div>
     </section>
@@ -1736,10 +1732,10 @@
                 Ready to Revolutionize Your Invoicing with AI?
             </h2>
             <p style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
-                Join thousands of businesses already using CmdSharp to streamline their billing process
+                Be among the first to experience revolutionary voice invoicing
             </p>
             <a href="#pricing" class="btn" style="background: var(--primary-dark); color: var(--neon-green); padding: 1rem 2rem; font-weight: 600;">
-                Get Started Today
+                Get Notified
             </a>
         </div>
     </section>
@@ -1762,7 +1758,7 @@
             <div class="footer-section">
                 <h4>Support</h4>
                 <a href="mailto:support@proviska.com">Email Support</a>
-                <a href="#pricing">Get Started</a>
+                <a href="#pricing">Get Notified</a>
             </div>
             
             <div class="footer-section">
@@ -1849,162 +1845,24 @@
             }, 4000);
         }
 
-        // Geo-location based pricing and checkout (same as original)
-        let userLocation = null;
-        let pricingData = {};
-
-        async function detectLocation() {
-            try {
-                const urlParams = new URLSearchParams(window.location.search);
-                const forceCountry = urlParams.get('country');
-
-                const locationUrl = new URL('https://ai.proviska.com/api/get-location.php');
-                if (forceCountry) {
-                    locationUrl.searchParams.set('country', forceCountry);
-                }
-
-                const [locationResponse, pricingResponse] = await Promise.all([
-                   fetch(locationUrl.toString()),
-                   fetch('https://ai.proviska.com/api/pricing-config.php')
-                ]);
-                
-                const locationData = await locationResponse.json();
-                const pricingResult = await pricingResponse.json();
-                
-                if (locationData.success) {
-                    userLocation = locationData;
-                } else {
-                    console.error('Location detection failed:', locationData.message);
-                    userLocation = { country: 'US', currency: 'USD' };
-                }
-                
-                if (pricingResult.success && pricingResult.pricing) {
-                    pricingData = {};
-                    pricingResult.pricing.forEach(config => {
-                        pricingData[config.country] = {
-                            amount: config.symbol + config.amount,
-                            currency: config.currency,
-                            symbol: config.symbol,
-                            price: config.amount,
-                            regular_price: config.regular_price,
-                            payment_gateway: config.payment_gateway,
-                            note: 'One-time payment • Lifetime access • All features included',
-                            context: `Regular price: ${config.symbol}${config.regular_price}/year`
-                        };
-                    });
-                    
-                    // Add fallback pricing if not already present
-                    if (!pricingData['ZA']) {
-                        pricingData['ZA'] = {
-                            amount: 'R499',
-                            currency: 'ZAR',
-                            symbol: 'R',
-                            price: 499,
-                            regular_price: 4499,
-                            payment_gateway: 'payfast',
-                            note: 'One-time payment • Lifetime access • All features included',
-                            context: 'Regular price: R4,499/year'
-                        };
-                    }
-                    if (!pricingData['US']) {
-                        pricingData['US'] = {
-                            amount: '$49',
-                            currency: 'USD',
-                            symbol: '$',
-                            price: 49,
-                            regular_price: 299,
-                            payment_gateway: 'lemonsqueezy',
-                            note: 'One-time payment • Lifetime access • All features included',
-                            context: 'Regular price: $299/year'
-                        };
-                    }
-                } else {
-                    console.error('Pricing fetch failed:', pricingResult.message || 'No pricing data');
-                    // Use fallback pricing
-                    pricingData = {
-                        'ZA': { amount: 'R499', currency: 'ZAR', symbol: 'R', price: 499, regular_price: 4499, payment_gateway: 'payfast', note: 'One-time payment • Lifetime access • All features included', context: 'Regular price: R4,499/year' },
-                        'US': { amount: '$49', currency: 'USD', symbol: '$', price: 49, regular_price: 299, payment_gateway: 'lemonsqueezy', note: 'One-time payment • Lifetime access • All features included', context: 'Regular price: $299/year' }
-                    };
-                }
-                
-                updatePricingDisplay();
-                showLocationInfo();
-                
-            } catch (error) {
-                console.error('Error detecting location or fetching pricing:', error);
-                userLocation = { country: 'US', currency: 'USD' };
-                pricingData = {
-                    'ZA': { amount: 'R499', currency: 'ZAR', symbol: 'R', price: 499, regular_price: 4499, payment_gateway: 'payfast', note: 'One-time payment • Lifetime access • All features included', context: 'Regular price: R4,499/year' },
-                    'US': { amount: '$49', currency: 'USD', symbol: '$', price: 49, regular_price: 299, payment_gateway: 'lemonsqueezy', note: 'One-time payment • Lifetime access • All features included', context: 'Regular price: $299/year' }
-                };
-                updatePricingDisplay();
-            }
-        }
-
-        function updatePricingDisplay() {
-            if (!userLocation || !pricingData) {
-               return;
-            }
-
-            const country = userLocation.country;
-            
-            const pricing = pricingData[country] || pricingData['US'] || Object.values(pricingData)[0];
-            
-            if (!pricing) {
-                console.error('No pricing data available');
-                return;
-            }
-            
-            document.getElementById('price-amount').textContent = pricing.amount;
-            document.getElementById('price-currency').textContent = pricing.currency;
-            document.getElementById('price-note').textContent = pricing.note;
-            document.getElementById('price-context').textContent = pricing.context;
-            document.getElementById('btn-text').textContent = `Get Lifetime Access (${pricing.amount})`;
-        }
-
-        function showLocationInfo() {
-            if (!userLocation || !pricingData) return;
-
-            const locationInfo = document.getElementById('location-info');
-            const locationText = document.getElementById('location-text');
-            
-            const country = userLocation.country;
-            const pricing = pricingData[country] || pricingData['US'] || Object.values(pricingData)[0];
-            
-            if (!pricing) return;
-            
-            const countryName = country === 'ZA' ? 'South Africa' : 
-                               country === 'GB' ? 'United Kingdom' :
-                               country === 'EU' ? 'Europe' : 'International';
-            const paymentMethod = pricing.payment_gateway === 'payfast' ? 'PayFast' : 'LemonSqueezy';
-            
-            locationText.textContent = `🌍 Detected location: ${countryName} • Payment via ${paymentMethod}`;
-            locationInfo.style.display = 'block';
-        }
-
-        async function initiatePurchase() {
-            if (!userLocation) {
-                alert('Please wait while we detect your location...');
-                return;
-            }
-
-            document.getElementById('btn-text').style.display = 'none';
-            document.getElementById('btn-loading').style.display = 'inline';
-            
-            try {
-                window.location.href = 'https://checkout.cmdsharp.com/';
-            } catch (error) {
-                console.error('Checkout error:', error);
-                alert('Sorry, there was an error processing your request. Please try again.');
-                
-                document.getElementById('btn-text').style.display = 'inline';
-                document.getElementById('btn-loading').style.display = 'none';
-            }
-        }
-
-        // Initialize on page load
+        // Simple form handling for notify me
         document.addEventListener('DOMContentLoaded', () => {
-            detectLocation();
+            const notifyForm = document.querySelector('.notify-form');
+            if (notifyForm) {
+                notifyForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const email = this.querySelector('input[type="email"]').value;
+                    const button = this.querySelector('button');
+                    const originalText = button.textContent;
+
+                    button.textContent = 'Thank you! We\'ll be in touch.';
+                    button.disabled = true;
+
+                    // Here you would typically send the email to your backend
+                    // For now, we'll just show a success message
+                    console.log('Email signup:', email);
+                });
+            }
         });
 
         // Gallery Lightbox Functionality
