@@ -1573,7 +1573,8 @@
             <form class="notify-form"
                   style="margin-bottom: 2rem;"
                   netlify
-                  name="email-signup">
+                  name="email-signup"
+                  method="POST">
                 <input type="email"
                        name="email"
                        placeholder="Enter your email address"
@@ -1868,17 +1869,13 @@
             const notifyForm = document.querySelector('.notify-form');
             if (notifyForm) {
                 notifyForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    const email = this.querySelector('input[type="email"]').value;
+                    // Don't prevent default - let Netlify handle the submission
                     const button = this.querySelector('button');
-                    const originalText = button.textContent;
-
-                    button.textContent = 'Thank you! We\'ll be in touch.';
+                    button.textContent = 'Submitting...';
                     button.disabled = true;
 
-                    // Here you would typically send the email to your backend
-                    // For now, we'll just show a success message
-                    console.log('Email signup:', email);
+                    // Netlify will handle the actual submission
+                    console.log('Form submitted to Netlify');
                 });
             }
         });
