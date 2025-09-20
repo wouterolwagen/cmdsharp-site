@@ -746,7 +746,7 @@
 
         /* Testimonials Section */
         .testimonials {
-            padding: 6rem 2rem;
+            padding: 6rem 2rem 2rem 2rem;
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             position: relative;
@@ -850,48 +850,6 @@
             font-size: 0.9rem;
         }
 
-        .beta-stats {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            margin-top: 4rem;
-            padding: 2rem;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .beta-stats::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
-            opacity: 0.8;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            display: block;
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--neon-green);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
 
         @media (max-width: 768px) {
             .testimonials-grid {
@@ -909,16 +867,6 @@
                 font-size: 1rem;
             }
 
-            .beta-stats {
-                flex-direction: column;
-                gap: 2rem;
-                margin: 3rem 1rem 0;
-                padding: 1.5rem;
-            }
-
-            .stat-number {
-                font-size: 1.5rem;
-            }
         }
 
         /* Documentation Section */
@@ -1838,20 +1786,6 @@
                 </div>
             </div>
 
-            <div class="beta-stats fade-in">
-                <div class="stat-item">
-                    <span class="stat-number">100+</span>
-                    <span class="stat-label">Beta Testers</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">3 Days</span>
-                    <span class="stat-label">Until Public Release</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">⭐⭐⭐⭐⭐</span>
-                    <span class="stat-label">Early Reviews</span>
-                </div>
-            </div>
         </div>
     </section>
 
