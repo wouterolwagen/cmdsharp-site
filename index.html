@@ -744,6 +744,183 @@
             }
         }
 
+        /* Testimonials Section */
+        .testimonials {
+            padding: 6rem 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            position: relative;
+        }
+
+        .testimonials-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .testimonial-card:hover::before {
+            opacity: 1;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-green);
+            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.15);
+        }
+
+        .testimonial-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .quote-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+        .testimonial-text {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: auto;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-size: 1.1rem;
+        }
+
+        .author-info h4 {
+            color: var(--text-light);
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .author-info span {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .beta-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 4rem;
+            padding: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .beta-stats::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+            opacity: 0.8;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--neon-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                max-width: 400px;
+                margin: 3rem auto 0;
+            }
+
+            .testimonial-card {
+                padding: 1.5rem;
+            }
+
+            .testimonial-text {
+                font-size: 1rem;
+            }
+
+            .beta-stats {
+                flex-direction: column;
+                gap: 2rem;
+                margin: 3rem 1rem 0;
+                padding: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 1.5rem;
+            }
+        }
+
         /* Documentation Section */
         .documentation {
             padding: 6rem 2rem;
@@ -1238,6 +1415,12 @@
         {
           "@type": "ListItem",
           "position": 3,
+          "name": "Reviews",
+          "item": "https://cmdsharp.com/#testimonials"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
           "name": "Pricing",
           "item": "https://cmdsharp.com/#pricing"
         }
@@ -1332,6 +1515,7 @@
                 <li><a href="#features">Features</a></li>
                 <li><a href="#demo">Demo</a></li>
                 <li><a href="#gallery">Screenshots</a></li>
+                <li><a href="#testimonials">Reviews</a></li>
                 <li><a href="#pricing">Pricing</a></li>
                 <li>
                     <a href="#pricing" class="btn btn-primary" style="color: var(--primary-dark); padding: 0.6rem 1.2rem; font-size: 0.9rem;">
@@ -1555,6 +1739,117 @@
                         <h4>⚙️ Settings</h4>
                         <p>Customize branding, tax rates, and business details</p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="section-header fade-in">
+            <h2 class="section-title">Early beta testers say</h2>
+            <p class="section-subtitle">Real feedback from our closed testing phase on Google Play Store</p>
+        </div>
+
+        <div class="testimonials-container fade-in">
+            <div class="testimonials-grid">
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">💬</div>
+                        <p class="testimonial-text">"Very good, easy to use and without problems"</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">AG</div>
+                            <div class="author-info">
+                                <h4>Adriel Garcia</h4>
+                                <span>Beta Tester</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">⭐</div>
+                        <p class="testimonial-text">"Awesome User Friendly App"</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">HR</div>
+                            <div class="author-info">
+                                <h4>Heni Rathi</h4>
+                                <span>Beta Tester</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">🚀</div>
+                        <p class="testimonial-text">"Very good, versatile, and fast app. I don't see any performance issues at the moment."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">LM</div>
+                            <div class="author-info">
+                                <h4>Luis M. Paniagua M.</h4>
+                                <span>Beta Tester</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">👍</div>
+                        <p class="testimonial-text">"Great job"</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">TT</div>
+                            <div class="author-info">
+                                <h4>Timur Turbil</h4>
+                                <span>Beta Tester</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">🌟</div>
+                        <p class="testimonial-text">"Awesome and nice app"</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">IH</div>
+                            <div class="author-info">
+                                <h4>Imran Hossain</h4>
+                                <span>Beta Tester</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">✨</div>
+                        <p class="testimonial-text">"Simple to use, great app!!"</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">RK</div>
+                            <div class="author-info">
+                                <h4>Robina Kausar</h4>
+                                <span>Beta Tester</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="beta-stats fade-in">
+                <div class="stat-item">
+                    <span class="stat-number">100+</span>
+                    <span class="stat-label">Beta Testers</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">3 Days</span>
+                    <span class="stat-label">Until Public Release</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">⭐⭐⭐⭐⭐</span>
+                    <span class="stat-label">Early Reviews</span>
                 </div>
             </div>
         </div>
