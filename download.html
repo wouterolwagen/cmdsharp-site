@@ -462,6 +462,27 @@
             footer {
                 display: none;
             }
+
+            /* Mobile styles for new sections */
+            .comparison-section div[style*="grid-template-columns"] {
+                grid-template-columns: 1fr !important;
+            }
+
+            .comparison-card {
+                margin-bottom: 1rem;
+            }
+
+            .use-case {
+                padding: 1rem !important;
+            }
+
+            .testimonial {
+                padding: 1rem !important;
+            }
+
+            .problem-card {
+                padding: 1.5rem !important;
+            }
         }
     </style>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7MD1Q5HKDQ"></script>
@@ -512,40 +533,140 @@
 
         <div class="download-container">
             <div class="download-content">
-                <h1 class="download-title">Ready to Transform Your Invoicing?</h1>
-                               
-                <div class="download-card">
-                    <h3 style="color: var(--text-light); margin-bottom: 1.5rem; font-size: 1.3rem;">
-                        🎯 Your 7-Day Free Trial Includes:
+                <div class="section-badge">📱 Mobile-First Invoicing</div>
+                <h1 class="download-title">Stop Losing Money While Customers Wait for Invoices</h1>
+                <p class="download-subtitle">Send professional invoices in 30 seconds - right from your phone, right after the job</p>
+
+                <!-- Problem Section -->
+                <div class="problem-card glass" style="margin-bottom: 2rem; padding: 2rem; border-left: 4px solid #ff6b6b;">
+                    <h3 style="color: #ff6b6b; margin-bottom: 1rem; font-size: 1.2rem;">
+                        ❌ The Problem: Delayed Invoicing = Delayed Payments
                     </h3>
-                    <ul class="features-list">
-                        <li>Full access to all premium features</li>
-                        <li>Create unlimited invoices</li>
-                        <li>AI-powered voice commands</li>
-                        <li>Professional PDF templates</li>
-                        <li>Customer management system</li>
-                        <li>No credit card required</li>
-                        <li>No automatic charges</li>
+                    <ul style="color: var(--text-muted); list-style: none; margin: 0; padding: 0;">
+                        <li style="margin-bottom: 0.5rem;">• WhatsApp screenshots look unprofessional</li>
+                        <li style="margin-bottom: 0.5rem;">• Excel invoices take 10+ minutes to create</li>
+                        <li style="margin-bottom: 0.5rem;">• Forgotten paperwork = forgotten payments</li>
+                        <li>• Customers "never received" handwritten receipts</li>
                     </ul>
                 </div>
 
-                <div class="warning-box">
-                    <strong>⚡ Safe secure download</strong>
-                    Safe secure download. SSL encryption. 
+                <!-- Solution Section -->
+                <div class="download-card" style="border-left: 4px solid var(--neon-green);">
+                    <h3 style="color: var(--neon-green); margin-bottom: 1.5rem; font-size: 1.3rem;">
+                        ✅ The Solution: Professional Invoices in 30 Seconds
+                    </h3>
+                    <ul class="features-list">
+                        <li><strong>Voice Commands:</strong> "Invoice John for $150 plumbing repair" - Done!</li>
+                        <li><strong>Instant Delivery:</strong> PDF sent to customer before you leave</li>
+                        <li><strong>Professional Brand:</strong> Your logo, your colors, your reputation</li>
+                        <li><strong>Mobile-First:</strong> No laptop, no desktop, just your phone</li>
+                        <li><strong>7-Day Free Trial:</strong> No credit card, no commitments</li>
+                        <li><strong>Works Offline:</strong> No signal? No problem</li>
+                    </ul>
                 </div>
             </div>
 
             <div class="steps-side">
                 <div id="error-message" class="error-message"></div>
                 
+                <!-- Before/After Comparison -->
+                <div class="comparison-section" style="margin-bottom: 2rem;">
+                    <h3 style="color: var(--text-light); margin-bottom: 1.5rem; text-align: center;">The Old Way vs The CmdSharp Way</h3>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+                        <div class="comparison-card" style="background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.3); backdrop-filter: blur(20px); border-radius: 15px; padding: 1.5rem;">
+                            <h4 style="color: #ff6b6b; margin-bottom: 1rem; text-align: center;">❌ Before CmdSharp</h4>
+                            <ul style="list-style: none; margin: 0; padding: 0; color: var(--text-muted);">
+                                <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
+                                    <span style="position: absolute; left: 0;">⏰</span>
+                                    10+ minutes per invoice
+                                </li>
+                                <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
+                                    <span style="position: absolute; left: 0;">📝</span>
+                                    Handwritten receipts
+                                </li>
+                                <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
+                                    <span style="position: absolute; left: 0;">💸</span>
+                                    Delayed payments
+                                </li>
+                                <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
+                                    <span style="position: absolute; left: 0;">😤</span>
+                                    Unprofessional image
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="comparison-card" style="background: rgba(0, 255, 136, 0.1); border: 1px solid rgba(0, 255, 136, 0.3); backdrop-filter: blur(20px); border-radius: 15px; padding: 1.5rem;">
+                            <h4 style="color: var(--neon-green); margin-bottom: 1rem; text-align: center;">✅ With CmdSharp</h4>
+                            <ul style="list-style: none; margin: 0; padding: 0; color: var(--text-muted);">
+                                <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
+                                    <span style="position: absolute; left: 0;">⚡</span>
+                                    30 seconds per invoice
+                                </li>
+                                <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
+                                    <span style="position: absolute; left: 0;">📱</span>
+                                    Professional PDF invoices
+                                </li>
+                                <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
+                                    <span style="position: absolute; left: 0;">💰</span>
+                                    Get paid 3x faster
+                                </li>
+                                <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
+                                    <span style="position: absolute; left: 0;">🎯</span>
+                                    Branded & professional
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Use Case Scenarios -->
+                <div class="use-cases-section" style="margin-bottom: 2rem;">
+                    <h3 style="color: var(--text-light); margin-bottom: 1.5rem; text-align: center;">Perfect For:</h3>
+
+                    <div class="use-case glass" style="margin-bottom: 1rem; padding: 1.5rem; display: flex; align-items: start; gap: 1rem;">
+                        <div style="font-size: 2rem;">🔧</div>
+                        <div>
+                            <h4 style="color: var(--neon-blue); margin-bottom: 0.5rem;">Tradespeople</h4>
+                            <p style="color: var(--text-muted); margin: 0; font-size: 0.95rem;">"Just fixed Mrs. Johnson's pipes? Send her invoice before you leave her driveway"</p>
+                        </div>
+                    </div>
+
+                    <div class="use-case glass" style="margin-bottom: 1rem; padding: 1.5rem; display: flex; align-items: start; gap: 1rem;">
+                        <div style="font-size: 2rem;">📸</div>
+                        <div>
+                            <h4 style="color: var(--neon-blue); margin-bottom: 0.5rem;">Freelance Creatives</h4>
+                            <p style="color: var(--text-muted); margin: 0; font-size: 0.95rem;">"Wedding shoot done? Couple gets their invoice before the reception starts"</p>
+                        </div>
+                    </div>
+
+                    <div class="use-case glass" style="margin-bottom: 1rem; padding: 1.5rem; display: flex; align-items: start; gap: 1rem;">
+                        <div style="font-size: 2rem;">💼</div>
+                        <div>
+                            <h4 style="color: var(--neon-blue); margin-bottom: 0.5rem;">Mobile Consultants</h4>
+                            <p style="color: var(--text-muted); margin: 0; font-size: 0.95rem;">"Meeting finished? Client gets professional invoice in their inbox instantly"</p>
+                        </div>
+                    </div>
+
+                    <div class="use-case glass" style="margin-bottom: 1.5rem; padding: 1.5rem; display: flex; align-items: start; gap: 1rem;">
+                        <div style="font-size: 2rem;">🏪</div>
+                        <div>
+                            <h4 style="color: var(--neon-blue); margin-bottom: 0.5rem;">Small Business Owners</h4>
+                            <p style="color: var(--text-muted); margin: 0; font-size: 0.95rem;">"Customer loves their service? Invoice sent before they leave the shop"</p>
+                        </div>
+                    </div>
+                </div>
+
                 <div id="android-content">
                     <div class="download-card">
-                        <button onclick="downloadApp()" class="btn btn-primary" id="download-btn">
-                            📱 Download CmdSharp Now
-                        </button>
+                        <a href="https://play.google.com/store/apps/details?id=com.proviska.cmdsharp" target="_blank" class="btn btn-primary" id="download-btn">
+                            <img src="images/google-play.png" alt="Get it on Google Play" style="height: 40px; margin-right: 10px; vertical-align: middle;">
+                            Start Your Free Trial
+                        </a>
                         <button onclick="showQRCode()" class="btn btn-secondary" id="qr-btn" style="margin-top: 1rem;">
                             📲 Get QR Code for Phone
                         </button>
+                        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem;">7 days free • No credit card required</p>
                     </div>
                     
                     <!-- QR Code Modal -->
@@ -556,10 +677,9 @@
                             <div id="qr-code-container" style="background: white; padding: 20px; border-radius: 20px; margin: 20px 0; display: inline-block;">
                                 <!-- QR Code will be generated here -->
                             </div>
-                            <p style="color: var(--text-muted); margin-top: 1rem;">Scan this QR code with your phone's camera to download CmdSharp</p>
+                            <p style="color: var(--text-muted); margin-top: 1rem;">Scan this QR code with your phone's camera to get CmdSharp from Google Play</p>
                             <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--glass-border);">
-                                <p style="color: var(--text-muted); font-size: 0.9rem;">Or manually visit:</p>
-                                <code style="background: var(--primary-dark); color: var(--neon-green); padding: 0.5rem 1rem; border-radius: 10px; font-size: 0.8rem; word-break: break-all; display: block; margin-top: 0.5rem;">https://cmdsharp.com/d</code>
+                                <p style="color: var(--text-muted); font-size: 0.9rem;">Or search "CmdSharp" in the Play Store</p>
                             </div>
                         </div>
                     </div>
@@ -572,40 +692,74 @@
                         <div class="step">
                             <div class="step-number">1</div>
                             <div class="step-content">
-                                <h3>Download the App</h3>
-                                <p>Click the button above to download CmdSharp APK</p>
+                                <h3>Visit Google Play Store</h3>
+                                <p>Click the Google Play button above or scan the QR code</p>
                             </div>
                         </div>
-                        
+
                         <div class="step">
                             <div class="step-number">2</div>
                             <div class="step-content">
-                                <h3>Open Your Downloads</h3>
-                                <p>Swipe down from the top of your screen and tap the notification</p>
+                                <h3>Install CmdSharp</h3>
+                                <p>Tap "Install" on the Google Play Store page</p>
                             </div>
                         </div>
-                        
+
                         <div class="step">
                             <div class="step-number">3</div>
                             <div class="step-content">
-                                <h3>Install & Allow</h3>
-                                <p>Tap install. If prompted, enable "Allow from this source" (safe)</p>
+                                <h3>Open the App</h3>
+                                <p>Tap "Open" or find CmdSharp in your app drawer</p>
                             </div>
                         </div>
-                        
+
                         <div class="step">
                             <div class="step-number">4</div>
                             <div class="step-content">
                                 <h3>Start Creating!</h3>
-                                <p>Open CmdSharp and start your 7-day free trial instantly</p>
+                                <p>Begin your 7-day free trial instantly - no credit card required</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Proof Section -->
+                    <div class="testimonials-section" style="margin: 2rem 0;">
+                        <h3 style="color: var(--text-light); margin-bottom: 1.5rem; text-align: center;">What Our Users Say:</h3>
+
+                        <div class="testimonial glass" style="margin-bottom: 1rem; padding: 1.5rem;">
+                            <div style="display: flex; align-items: start; gap: 1rem;">
+                                <div style="font-size: 1.5rem;">⭐⭐⭐⭐⭐</div>
+                                <div>
+                                    <p style="color: var(--text-light); font-style: italic; margin: 0 0 0.5rem 0;">"Finally, my customers can't say they 'never got the invoice'. Game changer!"</p>
+                                    <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">- Mike, Electrician</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="testimonial glass" style="margin-bottom: 1rem; padding: 1.5rem;">
+                            <div style="display: flex; align-items: start; gap: 1rem;">
+                                <div style="font-size: 1.5rem;">⭐⭐⭐⭐⭐</div>
+                                <div>
+                                    <p style="color: var(--text-light); font-style: italic; margin: 0 0 0.5rem 0;">"I get paid 3x faster now. No more chasing invoices!"</p>
+                                    <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">- Sarah, Mobile Hairdresser</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="testimonial glass" style="margin-bottom: 1rem; padding: 1.5rem;">
+                            <div style="display: flex; align-items: start; gap: 1rem;">
+                                <div style="font-size: 1.5rem;">⭐⭐⭐⭐⭐</div>
+                                <div>
+                                    <p style="color: var(--text-light); font-style: italic; margin: 0 0 0.5rem 0;">"My handwritten receipts were embarrassing. Now I look professional!"</p>
+                                    <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">- Tom, Handyman</p>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="warning-box">
-                        <strong>Need Help?</strong>
-                        If you see a security warning, it's normal for apps outside Play Store. Just tap "Settings" and enable "Allow from this source" - CmdSharp is 100% safe and this only needs to be done once.
-                        support@proviska.com
+                        <strong>🎯 Perfect for Mobile Workers</strong>
+                        Join thousands of tradespeople, freelancers, and business owners who invoice on-the-go with CmdSharp.
                     </div>
                 </div>
                 
@@ -662,25 +816,9 @@
             return deviceType;
         }
 
-        // Download function
+        // Download function - now redirects to Play Store
         function downloadApp() {
-            const btn = document.getElementById('download-btn');
-            const originalText = btn.textContent;
-            btn.innerHTML = '⏳ Preparing Download...';
-            btn.disabled = true;
-            
-            // Download from API endpoint
-            window.location.href = 'https://ai.proviska.com/api/demo-download.php?source=landing';
-            
-            setTimeout(() => {
-                btn.innerHTML = '🔄 Download Again';
-                btn.disabled = false;
-                
-                const warningBox = document.querySelector('.warning-box');
-                warningBox.innerHTML = '<strong>🎉 Download Started!</strong> Check your Downloads folder or notification bar. If the download didn\'t start, click "Download Again" above.';
-                warningBox.style.background = 'rgba(0, 255, 136, 0.1)';
-                warningBox.style.borderColor = 'rgba(0, 255, 136, 0.3)';
-            }, 3000);
+            window.open('https://play.google.com/store/apps/details?id=com.proviska.cmdsharp', '_blank');
         }
 
         // QR Code functionality
@@ -693,8 +831,8 @@
             // Clear any existing QR code
             container.innerHTML = '';
             
-            // Generate new QR code
-            const downloadUrl = 'https://ai.proviska.com/api/demo-download.php?source=qr';
+            // Generate new QR code for Play Store
+            const downloadUrl = 'https://play.google.com/store/apps/details?id=com.proviska.cmdsharp';
             
             // Create QR code with professional styling
             qrCodeInstance = new QRCode(container, {
